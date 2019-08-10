@@ -14,7 +14,11 @@ namespace PosSustemUIU.Controllers
         {
             return View();
         }
-
+        public IActionResult Template()
+        {
+            return View();
+        }
+        
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

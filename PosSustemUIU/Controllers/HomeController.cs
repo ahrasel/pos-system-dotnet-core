@@ -16,10 +16,6 @@ namespace PosSustemUIU.Controllers
         {
             return View();
         }
-        public IActionResult Template()
-        {
-            return View();
-        }
         
         public IActionResult About()
         {

@@ -16,13 +16,16 @@ namespace PosSustemUIU.Controllers
         {
             return View();
         }
-        
+        [AllowAnonymous]
+        [Route("/about")]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
 
             return View();
         }
+        [AllowAnonymous]
+        [Route("/contact")]
 
         public IActionResult Contact()
         {
@@ -30,6 +33,8 @@ namespace PosSustemUIU.Controllers
 
             return View();
         }
+        [AllowAnonymous]
+        [Route("/privacy")]
 
         public IActionResult Privacy()
         {

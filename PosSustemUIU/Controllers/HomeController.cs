@@ -12,6 +12,7 @@ namespace PosSustemUIU.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        // [Route("/dashboard")]
         public IActionResult Index()
         {
             return View();

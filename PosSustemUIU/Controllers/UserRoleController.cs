@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PosSustemUIU.Models;
 using PosSustemUIU.ViewModels;
 
 namespace PosSustemUIU.Controllers
@@ -9,10 +10,10 @@ namespace PosSustemUIU.Controllers
     [Authorize]
     public class UserRoleController : BaseCotroller
     {
-        private readonly UserManager<IdentityUser> _userManager; 
+        private readonly UserManager<ApplicationUser> _userManager; 
         private readonly RoleManager<IdentityRole> _roleManager; 
 
-        public UserRoleController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public UserRoleController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             this._userManager = userManager;
             this._roleManager = roleManager;

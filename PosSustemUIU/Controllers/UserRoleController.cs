@@ -1,10 +1,13 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PosSustemUIU.ViewModels;
 
 namespace PosSustemUIU.Controllers
 {
-    public class UserRoleController : Controller
+    [Authorize]
+    public class UserRoleController : BaseCotroller
     {
         private readonly UserManager<IdentityUser> _userManager; 
         private readonly RoleManager<IdentityRole> _roleManager; 
@@ -14,11 +17,34 @@ namespace PosSustemUIU.Controllers
             this._userManager = userManager;
             this._roleManager = roleManager;
         }
-        // GET: Students
+        // GET: UserRoles
         public ActionResult Index()
         {
             var roles = _roleManager.Roles;
-            return View(roles);
-        } 
+            return View(new UserRoleVM { Roles = roles});
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult>  Create(UserRoleVM model, object Session)
+        {
+            var roles = _roleManager.Roles;
+            if(model.RoleName != null)
+            {
+                await _roleManager.CreateAsync(new IdentityRole{Name = model.RoleName});
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var role = await _roleManager.FindByIdAsync(id);
+            await _roleManager.DeleteAsync(role);
+            
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

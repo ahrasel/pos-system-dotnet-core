@@ -1,4 +1,6 @@
+using System;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace PosSustemUIU.Helpers
 {
@@ -14,6 +16,11 @@ namespace PosSustemUIU.Helpers
                 return (string) value;
             }
             return "undefined";
+        }
+
+        public static string Check(Boolean condition, String ifTrue, String ifFalse)
+        {
+            return condition ? ifTrue : ifFalse;
         }
     }
 }

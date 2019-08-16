@@ -6,9 +6,12 @@
             <h5 class="card-title">@Model.Heading</h5>
         </div>
         <div class="col-sm-6">
-            <button type="button" class="btn btn-primary btn-sm float-right">
-                <a asp-controller="@Model.Controller" asp-action="Create" class="text-white">Add New</a>
-            </button>
+            @if (Model.CreateButton)
+            {
+                <button type="button" class="btn btn-primary btn-sm float-right">
+                    <a asp-controller="@Model.Controller" asp-action="Create" class="text-white">Add New</a>
+                </button>   
+            }
         </div>
         </div>
     </div>
@@ -27,7 +30,7 @@
                         }
                         @if (Model.Actions != null && Model.Actions.Any())
                         {
-                            <th class="text-center" style="width: 20%">Actions</th>
+                            <th class="text-center" style="width: 15%">Actions</th>
                         }
                     </tr>
                 </thead>
@@ -39,10 +42,10 @@
                         {
                             count++;
                             <tr>
+                                <td class="text-center">@count</td>
                                 @if (Model.Keys != null && Model.Keys.Any())
                                 {
                                     foreach(var key in Model.Keys){
-                                        <td class="text-center">@count</td>
                                         <td class="text-center">@ViewHelpers.GetPropertyValue(data, key)</td>
                                     }
                                 }                    
@@ -51,11 +54,11 @@
                                     <td class="text-center">
                                         @if (Model.Actions.Contains(TableActions.Show))
                                         {
-                                            <a asp-controller="@Model.Controller" asp-action="Details" class="btn btn-cyan btn-sm text-white"><i class="fas fa-eye" aria-hidden="true"></i></a>
+                                            <a asp-controller="@Model.Controller" asp-action="Details" asp-route-id="@data.Id" class="btn btn-cyan btn-sm text-white"><i class="fas fa-eye" aria-hidden="true"></i></a>
                                         }
                                         @if (Model.Actions.Contains(TableActions.Edit))
                                         {
-                                            <a asp-controller="@Model.Controller" asp-action="Edit" class="btn btn-success btn-sm text-white"><i class="far fa-edit" aria-hidden="true"></i></a>
+                                            <a asp-controller="@Model.Controller" asp-action="Edit" asp-route-id="@data.Id" class="btn btn-success btn-sm text-white"><i class="far fa-edit" aria-hidden="true"></i></a>
                                         }
                                         @if (Model.Actions.Contains(TableActions.Delete))
                                         {
@@ -86,7 +89,7 @@
                         }
                         @if (Model.Actions != null && Model.Actions.Any())
                         {
-                            <th class="text-center" style="width: 20%">Actions</th>
+                            <th class="text-center" style="width: 15%">Actions</th>
                         }
                     </tr>
                 </tfoot>

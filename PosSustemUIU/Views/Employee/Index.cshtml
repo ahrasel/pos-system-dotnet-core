@@ -1,0 +1,16 @@
+﻿@model IEnumerable<ApplicationUser>
+
+<div class="row">
+    <div class="col">
+        @await Component.InvokeAsync(
+        "DataTable", new DataTableModel { 
+            Controller = "Employee",
+            Columns = new List<string>{"Email", "PhoneNumber", "Image", "IsActive", },
+            Heading = "User Roles",
+            TableData = Model,
+            CreateButton = true,
+            Keys = new List<string> {"Email", "PhoneNumber", "Image", "IsActive", },
+            Actions = new List<TableActions> {TableActions.Show, TableActions.Edit, TableActions.Delete}
+        })
+    </div>
+</div>

@@ -10,6 +10,7 @@ namespace PosSustemUIU.ComponentsModel
         public string Heading { get; set; }
         public string Controller { get; set; }
         public bool ShowStatus { get; set; }
+        public bool CreateButton { get; set; }
         public List<string> Columns { get; set; }
         public List<TableActions> Actions { get; set; }
         public List<string> Keys { get; set; }

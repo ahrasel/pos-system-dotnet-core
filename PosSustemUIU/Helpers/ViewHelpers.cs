@@ -11,7 +11,12 @@ namespace PosSustemUIU.Helpers
             var value =  obj.GetType().GetProperties()
                .Single(pi => pi.Name == propertyName)
                .GetValue(obj, null);
-            if (value != null)
+            
+            if (value != null && propertyName == "IsActive")
+            {
+                return (bool)value == true ? "1" : "0";
+            }
+            else if (value != null)
             {
                 return (string) value;
             }

@@ -19,7 +19,7 @@ namespace PosSustemUIU.Controllers
             this._roleManager = roleManager;
         }
         // GET: UserRoles
-        public ActionResult Index()
+        public IActionResult Index()
         {
             var roles = _roleManager.Roles;
             return View(new UserRoleVM { Roles = roles});
@@ -47,5 +47,19 @@ namespace PosSustemUIU.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public override Task<IActionResult> ChangeActiveStatus()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override Task<IActionResult> SoftDelete()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override Task<IActionResult> Restore()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

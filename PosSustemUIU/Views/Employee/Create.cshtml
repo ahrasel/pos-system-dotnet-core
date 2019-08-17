@@ -1,53 +1,71 @@
-﻿<div class="row">
+﻿@model EmployeeVM
+<div class="row">
     <div class="col">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Add New Role</h4>
+                <h4 class="card-title">Add New Employee</h4>
             </div>
             <form asp-controller="Employee" asp-action="Create" method="POST" enctype="multipart/form-data">
-                <div asp-validation-summary="All" class="text-danger"></div>        
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-6">
                             <div class="form-group">
-                                <label>First Name <span class="text-danger">*</span></label>
-                                <input Name="RoleName" type="text" class="form-control" placeholder="Name" required>
+                                <label asp-for="FirstName">First Name <span class="text-danger">*</span></label>
+                                <input asp-for="FirstName" type="text" class="form-control" placeholder="first name" required>
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label>Email<span class="text-danger">*</span></label>
-                                <input Name="RoleName" type="text" class="form-control" placeholder="Name" required>
+                                <input asp-for="Email" type="text" class="form-control" placeholder="email" required>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Password<span class="text-danger">*</span></label>
+                                <input asp-for="Password" type="password" class="form-control" placeholder="password" required>
+                                <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label>Date Of Birth<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="datepicker-autoclose" placeholder="mm/dd/yyyy">
+                                <input asp-for="DateOfBirth" type="text" class="form-control" id="datepicker-autoclose" placeholder="mm/dd/yyyy">
+                                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label>Address<span class="text-danger">*</span></label>
-                                <textarea rows="6" Name="RoleName"class="form-control" placeholder="Name" required></textarea>
+                                <textarea asp-for="Address" rows="6" class="form-control" placeholder="address" required></textarea>
+                                <span asp-validation-for="Address" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-6">
                             <div class="form-group">
                                 <label>Last Name <span class="text-danger">*</span></label>
-                                <input Name="RoleName" type="text" class="form-control" placeholder="Name" required>
+                                <input asp-for="LastName" type="text" class="form-control" placeholder="last name" required>
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>User Name <span class="text-danger">*</span></label>
+                                <input asp-for="UserName" type="text" class="form-control" placeholder="user name" required>
+                                <span asp-validation-for="UserName" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label>Phone Number<span class="text-danger">*</span></label>
-                                <input Name="RoleName" type="text" class="form-control" placeholder="Name" required>
+                                <input asp-for="PhoneNumber" type="text" class="form-control" placeholder="phone number" required>
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label>Image<span class="text-danger">*</span></label>
-                                <input type="file" class="form-control" id="" required="">
+                                <label>Image</label>
+                                <input asp-for="Image" type="file" class="form-control">
+                                <span asp-validation-for="Image" class="text-danger"></span>
                             </div>
                            <div class="form-group">
-                                <label>BIO<span class="text-danger">*</span></label>
-                                <textarea rows="6" Name="RoleName"class="form-control" placeholder="Name" required></textarea>
+                                <label>BIO</label>
+                                <textarea asp-for="Description" rows="6" class="form-control" placeholder="write short description" ></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
                             </div>
                             
                         </div>
                        <div class="col">
                             <div class="custom-control custom-checkbox mr-sm-2">
-                                <input type="checkbox" class="custom-control-input" id="customControlAutosizing1">
+                                <input asp-for="IsActive" type="checkbox" class="custom-control-input" id="customControlAutosizing1">
                                 <label class="custom-control-label" for="customControlAutosizing1">Active</label>
                             </div>
                        </div>
@@ -64,3 +82,7 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    
+}

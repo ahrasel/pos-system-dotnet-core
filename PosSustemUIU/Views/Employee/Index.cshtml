@@ -5,7 +5,7 @@
         @await Component.InvokeAsync(
         "DataTable", new DataTableModel { 
             Controller = "Employee",
-            Columns = new List<string>{"Email", "PhoneNumber", "Image", "IsActive", },
+            Columns = new List<string>{"Email", "PhoneNumber", "Image", "Active", },
             Heading = "User Roles",
             TableData = Model,
             CreateButton = true,

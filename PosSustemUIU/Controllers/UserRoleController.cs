@@ -47,17 +47,17 @@ namespace PosSustemUIU.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public override Task<IActionResult> ChangeActiveStatus()
+        public override Task<IActionResult> ChangeActiveStatus(string id)
         {
             throw new System.NotImplementedException();
         }
 
-        public override Task<IActionResult> SoftDelete()
+        public override Task<IActionResult> SoftDelete(string id)
         {
             throw new System.NotImplementedException();
         }
 
-        public override Task<IActionResult> Restore()
+        public override Task<IActionResult> Restore(string id)
         {
             throw new System.NotImplementedException();
         }

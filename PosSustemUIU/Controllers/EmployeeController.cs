@@ -1,21 +1,30 @@
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PosSustemUIU.Data;
 using PosSustemUIU.Models;
+using PosSustemUIU.ViewModels;
 
 namespace PosSustemUIU.Controllers
 {
+    [Authorize]
     public class EmployeeController : BaseCotroller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IHostingEnvironment _environment;
+         
         
-        public EmployeeController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public EmployeeController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IHostingEnvironment environment):base()
         {
             this._userManager = userManager;
             this._roleManager = roleManager;
+            this._environment = environment;
         }
         
         // GET: {Controller}
@@ -50,14 +59,36 @@ namespace PosSustemUIU.Controllers
         // POST: {Controller}/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ApplicationUser user)
+        public async Task<IActionResult> Create(EmployeeVM employee)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)  return View(employee);
+
+            //upload image is exist
+            var files = HttpContext.Request.Form.Files;
+            string fileName = null;
+            if (files != null)
             {
-                await _userManager.CreateAsync(user);
-                return RedirectToAction(nameof(Index));
+                var fileNames = UploadFiles(_environment, files, "users");
+                if(fileNames.Count > 0){
+                    fileName = fileNames[0];
+                }
             }
-            return View(user);
+            //save employee
+            var user = new ApplicationUser
+            {
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                UserName = employee.UserName,
+                Email = employee.Email,
+                PhoneNumber = employee.PhoneNumber,
+                DateOfBirth = employee.DateOfBirth,
+                Image = fileName,
+                Address = employee.Address,
+                Description = employee.Description,
+                IsActive = employee.IsActive
+            };
+           var res = await _userManager.CreateAsync(user, employee.Password);
+            return RedirectToAction(nameof(Index));
         }
         
         // GET: {Controller}/Edit/5
@@ -73,6 +104,17 @@ namespace PosSustemUIU.Controllers
             {
                 return NotFound();
             }
+            // var employee = new EmployeeVM{
+            //     FirstName = user.FirstName,
+            //     LastName = user.LastName,
+            //     Email = user.Email,
+            //     PhoneNumber = user.PhoneNumber,
+            //     Address = user.Address,
+            //     Description = user.Description,
+            //     IsActive = user.IsActive,
+            //     DateOfBirth = user.DateOfBirth,
+
+            // };
             return View(user);
         }
         
@@ -125,19 +167,37 @@ namespace PosSustemUIU.Controllers
             return user == null ? false : true;
         }
 
-        public override Task<IActionResult> ChangeActiveStatus()
+        [HttpGet]
+        public override async Task<IActionResult> ChangeActiveStatus(string id)
         {
-            throw new System.NotImplementedException();
+            // id = id as string;
+            var user = await _userManager.FindByIdAsync(id);
+            user.IsActive = !user.IsActive;
+            await _userManager.UpdateAsync(user);
+
+            return RedirectToAction(nameof(Index));
         }
 
-        public override Task<IActionResult> SoftDelete()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public override async Task<IActionResult> SoftDelete(string id)
         {
-            throw new System.NotImplementedException();
+            var user = await _userManager.FindByIdAsync(id);
+            user.IsDeleted = !user.IsDeleted;
+            await _userManager.UpdateAsync(user);
+
+            return RedirectToAction(nameof(Index));
         }
 
-        public override Task<IActionResult> Restore()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public override async Task<IActionResult> Restore(string id)
         {
-            throw new System.NotImplementedException();
+            var user = await _userManager.FindByIdAsync(id);
+            user.IsDeleted = !user.IsDeleted;
+            await _userManager.UpdateAsync(user);
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

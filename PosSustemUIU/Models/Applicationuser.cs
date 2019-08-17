@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
 namespace PosSustemUIU.Models
@@ -16,5 +17,8 @@ namespace PosSustemUIU.Models
         public bool IsActive { get; set; }
         public string Meta { get; set; }
         public bool IsDeleted { get; set; }
+        
+        public ICollection<ProductCategory> ProductCategories { get; set; }
+        public ICollection<Product> Products { get; set; }
     }
 }

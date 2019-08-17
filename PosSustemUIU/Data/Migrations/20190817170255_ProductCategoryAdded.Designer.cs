@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PosSustemUIU.Data;
 
 namespace PosSustemUIU.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190817170255_ProductCategoryAdded")]
+    partial class ProductCategoryAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -200,45 +202,6 @@ namespace PosSustemUIU.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("PosSustemUIU.Models.Product", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ApplicationUserId");
-
-                    b.Property<string>("Code");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Image");
-
-                    b.Property<bool>("IsActive");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<string>("KeyWord");
-
-                    b.Property<string>("Meta");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("ProductCategoryId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("ProductCategoryId");
-
-                    b.HasIndex("Name", "Code")
-                        .IsUnique();
-
-                    b.ToTable("Products");
-                });
-
             modelBuilder.Entity("PosSustemUIU.Models.ProductCategory", b =>
                 {
                     b.Property<string>("Id")
@@ -263,9 +226,6 @@ namespace PosSustemUIU.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
 
                     b.ToTable("ProductCategories");
                 });
@@ -315,25 +275,11 @@ namespace PosSustemUIU.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("PosSustemUIU.Models.Product", b =>
-                {
-                    b.HasOne("PosSustemUIU.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("Products")
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("PosSustemUIU.Models.ProductCategory", "ProductCategory")
-                        .WithMany("Products")
-                        .HasForeignKey("ProductCategoryId")
-                        .OnDelete(DeleteBehavior.SetNull);
-                });
-
             modelBuilder.Entity("PosSustemUIU.Models.ProductCategory", b =>
                 {
                     b.HasOne("PosSustemUIU.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("ProductCategories")
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("ApplicationUserId");
                 });
 #pragma warning restore 612, 618
         }

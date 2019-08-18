@@ -41,7 +41,7 @@
                         foreach (var data in Model.TableData)
                         {
                             count++;
-                            <tr>
+                            <tr style="@( Model.Actions.Contains(TableActions.SoftDelete) && data.IsDeleted ? "background: #f1cfcf;" : "" )">
                                 <td class="text-center">@count</td>
                                 @if (Model.Keys != null && Model.Keys.Any())
                                 {
@@ -80,7 +80,7 @@
                                         }
                                         @if (Model.Actions.Contains(TableActions.Delete))
                                         {
-                                            if (@data.IsDeleted)
+                                            if (Model.Actions.Contains(TableActions.SoftDelete) && @data.IsDeleted)
                                             {
                                                 <form style="display: inline;" method="POST" asp-controller="@Model.Controller" asp-action="Restore" role="form">
                                                     <input type="hidden" name="Id" value="@data.Id" />
@@ -92,7 +92,7 @@
                                                 </form>
                                             }
                                             else{
-                                                <form style="display: inline;" method="POST" asp-controller="@Model.Controller" asp-action="SoftDelete" role="form">
+                                                <form style="display: inline;" method="POST" asp-controller="@Model.Controller" asp-action="@( Model.Actions.Contains(TableActions.SoftDelete) ? "SoftDelete" : "Delete")" role="form">
                                                     <input type="hidden" name="Id" value="@data.Id" />
                                                     <button title="Delete" type="submit" class="btn btn-danger btn-sm"><i class="far fa-trash-alt" aria-hidden="true"></i></button>
                                                 </form>

@@ -24,7 +24,7 @@ namespace PosSustemUIU.Models {
         public ProductCategory ProductCategory { get; set; }
         public Supplier Supplier { get; set; }
         public Brand Brand { get; set; }
-        public string Created { get; set; }
+        public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
         public string DeletedBy { get; set; }
         public DateTime CreatedAt { get; set; }

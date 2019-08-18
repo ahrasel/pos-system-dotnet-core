@@ -78,6 +78,8 @@ namespace PosSustemUIU.Data {
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<ProductPurchase> ProductPurchases { get; set; }
+        public DbSet<ProductSale> ProductSales { get; set; }
 
     }
 }

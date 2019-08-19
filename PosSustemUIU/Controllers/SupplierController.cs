@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,13 +11,16 @@ using PosSustemUIU.Models;
 
 namespace PosSustemUIU.Controllers
 {
-    public class SupplierController : Controller
+    public class SupplierController : BaseCotroller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHostingEnvironment _environment;
 
-        public SupplierController(ApplicationDbContext context)
+        public SupplierController(ApplicationDbContext context, IHostingEnvironment environment)
         {
             _context = context;
+            _environment = environment;
+
         }
 
         // GET: Supplier
@@ -50,14 +54,25 @@ namespace PosSustemUIU.Controllers
         }
 
         // POST: Supplier/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Code,MainContact,OtherContact,Email,Image,IsActive,Meta,IsDeleted,CreatedBy,UpdatedBy,DeletedBy,CreatedAt,DeletedAt")] Supplier supplier)
+        public async Task<IActionResult> Create([Bind("Name,Description,Code,MainContact,OtherContact,Email,Image,IsActive")] Supplier supplier)
         {
             if (ModelState.IsValid)
             {
+                //upload image 
+                var files = HttpContext.Request.Form.Files;
+                if (files != null)
+                {
+                    var fileNames = UploadFiles(_environment, files, "suppliers");
+                    if (fileNames.Count > 0)
+                    {
+                        supplier.Image = fileNames[0];
+                    }
+                }
+
+                //save 
+                supplier.CreatedBy = GteUserId();
                 _context.Add(supplier);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -82,11 +97,9 @@ namespace PosSustemUIU.Controllers
         }
 
         // POST: Supplier/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Description,Code,MainContact,OtherContact,Email,Image,IsActive,Meta,IsDeleted,CreatedBy,UpdatedBy,DeletedBy,CreatedAt,DeletedAt")] Supplier supplier)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Description,Code,MainContact,OtherContact,Email,Image,IsActive")] Supplier supplier)
         {
             if (id != supplier.Id)
             {
@@ -97,6 +110,18 @@ namespace PosSustemUIU.Controllers
             {
                 try
                 {
+                    //upload image 
+                    var files = HttpContext.Request.Form.Files;
+                    if (files != null)
+                    {
+                        var fileNames = UploadFiles(_environment, files, "suppliers");
+                        if (fileNames.Count > 0)
+                        {
+                            supplier.Image = fileNames[0];
+                        }
+                    }
+                    //update
+                    supplier.UpdatedBy = GteUserId();
                     _context.Update(supplier);
                     await _context.SaveChangesAsync();
                 }
@@ -148,6 +173,63 @@ namespace PosSustemUIU.Controllers
         private bool SupplierExists(string id)
         {
             return _context.Suppliers.Any(e => e.Id == id);
+        }
+
+        public override async Task<IActionResult> ChangeActiveStatus(string id)
+        {
+            if (!SupplierExists(id))
+            {
+                return NotFound();
+            }
+        
+            var supplier = await GetSuplierById(id);
+            supplier.IsActive = !supplier.IsActive;
+            supplier.UpdatedBy = GteUserId();
+            _context.Update(supplier);
+            await _context.SaveChangesAsync();
+        
+            return RedirectToAction(nameof(Index));
+        }
+        
+        public override async Task<IActionResult> SoftDelete(string id)
+        {
+            if (!SupplierExists(id))
+            {
+                return NotFound();
+            }
+        
+            var supplier = await GetSuplierById(id);
+            supplier.IsDeleted = !supplier.IsDeleted;
+            supplier.UpdatedBy = GteUserId();
+            supplier.DeletedBy = GteUserId();
+            supplier.DeletedAt = DateTime.Now;
+            _context.Update(supplier);
+            await _context.SaveChangesAsync();
+        
+            return RedirectToAction(nameof(Index));
+        }
+        
+        public override async Task<IActionResult> Restore(string id)
+        {
+            if (!SupplierExists(id))
+            {
+                return NotFound();
+            }
+        
+            var supplier = await GetSuplierById(id);
+            supplier.IsDeleted = !supplier.IsDeleted;
+            supplier.UpdatedBy = GteUserId();
+            _context.Update(supplier);
+            await _context.SaveChangesAsync();
+        
+            return RedirectToAction(nameof(Index));
+        }
+        
+        
+        private async Task<Supplier> GetSuplierById(string id)
+        {
+            var supplier = await _context.Suppliers.FindAsync(id);
+            return supplier;
         }
     }
 }

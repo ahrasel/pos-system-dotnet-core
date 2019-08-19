@@ -12,12 +12,10 @@ namespace PosSustemUIU.Controllers
     public class AreaController : BaseCotroller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AreaController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public AreaController(ApplicationDbContext context)
         {
             _context = context;
-            this._userManager = userManager;
         }
 
         // GET: Area

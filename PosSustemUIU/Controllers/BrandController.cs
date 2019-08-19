@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,13 +11,15 @@ using PosSustemUIU.Models;
 
 namespace PosSustemUIU.Controllers
 {
-    public class BrandController : Controller
+    public class BrandController : BaseCotroller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHostingEnvironment _environment;
 
-        public BrandController(ApplicationDbContext context)
+        public BrandController(ApplicationDbContext context, IHostingEnvironment environment):base()
         {
             _context = context;
+            _environment = environment;
         }
 
         // GET: Brand
@@ -50,14 +53,25 @@ namespace PosSustemUIU.Controllers
         }
 
         // POST: Brand/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Code,Image,IsActive,Meta,IsDeleted,CreatedBy,UpdatedBy,DeletedBy,CreatedAt,DeletedAt")] Brand brand)
+        public async Task<IActionResult> Create([Bind("Name,Description,Code,Image,IsActive")] Brand brand)
         {
             if (ModelState.IsValid)
             {
+                //upload image 
+                var files = HttpContext.Request.Form.Files;
+                if (files != null)
+                {
+                    var fileNames = UploadFiles(_environment, files, "brands");
+                    if (fileNames.Count > 0)
+                    {
+                        brand.Image = fileNames[0];
+                    }
+                }
+
+                //save 
+                brand.CreatedBy = GteUserId();
                 _context.Add(brand);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -82,11 +96,9 @@ namespace PosSustemUIU.Controllers
         }
 
         // POST: Brand/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Description,Code,Image,IsActive,Meta,IsDeleted,CreatedBy,UpdatedBy,DeletedBy,CreatedAt,DeletedAt")] Brand brand)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Description,Code,Image,IsActive")] Brand brand)
         {
             if (id != brand.Id)
             {
@@ -97,6 +109,18 @@ namespace PosSustemUIU.Controllers
             {
                 try
                 {
+                    //upload image 
+                    var files = HttpContext.Request.Form.Files;
+                    if (files != null)
+                    {
+                        var fileNames = UploadFiles(_environment, files, "brands");
+                        if (fileNames.Count > 0)
+                        {
+                            brand.Image = fileNames[0];
+                        }
+                    }
+                    //update
+                    brand.UpdatedBy = GteUserId();
                     _context.Update(brand);
                     await _context.SaveChangesAsync();
                 }
@@ -148,6 +172,63 @@ namespace PosSustemUIU.Controllers
         private bool BrandExists(string id)
         {
             return _context.Brands.Any(e => e.Id == id);
+        }
+
+        public override async Task<IActionResult> ChangeActiveStatus(string id)
+        {
+            if (!BrandExists(id))
+            {
+                return NotFound();
+            }
+        
+            var brand = await GetBrandById(id);
+            brand.IsActive = !brand.IsActive;
+            brand.UpdatedBy = GteUserId();
+            _context.Update(brand);
+            await _context.SaveChangesAsync();
+        
+            return RedirectToAction(nameof(Index));
+        }
+        
+        public override async Task<IActionResult> SoftDelete(string id)
+        {
+            if (!BrandExists(id))
+            {
+                return NotFound();
+            }
+        
+            var brand = await GetBrandById(id);
+            brand.IsDeleted = !brand.IsDeleted;
+            brand.UpdatedBy = GteUserId();
+            brand.DeletedBy = GteUserId();
+            brand.DeletedAt = DateTime.Now;
+            _context.Update(brand);
+            await _context.SaveChangesAsync();
+        
+            return RedirectToAction(nameof(Index));
+        }
+        
+        public override async Task<IActionResult> Restore(string id)
+        {
+            if (!BrandExists(id))
+            {
+                return NotFound();
+            }
+        
+            var brand = await GetBrandById(id);
+            brand.IsDeleted = !brand.IsDeleted;
+            brand.UpdatedBy = GteUserId();
+            _context.Update(brand);
+            await _context.SaveChangesAsync();
+        
+            return RedirectToAction(nameof(Index));
+        }
+        
+        
+        private async Task<Brand> GetBrandById(string id)
+        {
+            var brand = await _context.Brands.FindAsync(id);
+            return brand;
         }
     }
 }

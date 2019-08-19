@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,13 +11,16 @@ using PosSustemUIU.Models;
 
 namespace PosSustemUIU.Controllers
 {
-    public class CustomerController : Controller
+    public class CustomerController : BaseCotroller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHostingEnvironment _environment;
 
-        public CustomerController(ApplicationDbContext context)
+        public CustomerController(ApplicationDbContext context, IHostingEnvironment environment)
         {
             _context = context;
+            _environment = environment;
+
         }
 
         // GET: Customer
@@ -50,14 +54,25 @@ namespace PosSustemUIU.Controllers
         }
 
         // POST: Customer/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,PhoneNumber,OtherContact,Address,Description,Image,IsActive,Meta,IsDeleted,CreatedBy,UpdatedBy,DeletedBy")] Customer customer)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,PhoneNumber,OtherContact,Address,Description,Image,IsActive")] Customer customer)
         {
             if (ModelState.IsValid)
             {
+                //upload image 
+                var files = HttpContext.Request.Form.Files;
+                if (files != null)
+                {
+                    var fileNames = UploadFiles(_environment, files, "customers");
+                    if (fileNames.Count > 0)
+                    {
+                        customer.Image = fileNames[0];
+                    }
+                }
+
+                //save 
+                customer.CreatedBy = GteUserId();
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -82,11 +97,9 @@ namespace PosSustemUIU.Controllers
         }
 
         // POST: Customer/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,FirstName,LastName,Email,PhoneNumber,OtherContact,Address,Description,Image,IsActive,Meta,IsDeleted,CreatedBy,UpdatedBy,DeletedBy")] Customer customer)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,FirstName,LastName,Email,PhoneNumber,OtherContact,Address,Description,Image,IsActive")] Customer customer)
         {
             if (id != customer.Id)
             {
@@ -97,6 +110,19 @@ namespace PosSustemUIU.Controllers
             {
                 try
                 {
+                    //upload image 
+                    var files = HttpContext.Request.Form.Files;
+                    if (files != null)
+                    {
+                        var fileNames = UploadFiles(_environment, files, "customers");
+                        if (fileNames.Count > 0)
+                        {
+                            customer.Image = fileNames[0];
+                        }
+                    }
+
+                    //update
+                    customer.UpdatedBy = GteUserId();
                     _context.Update(customer);
                     await _context.SaveChangesAsync();
                 }
@@ -148,6 +174,63 @@ namespace PosSustemUIU.Controllers
         private bool CustomerExists(string id)
         {
             return _context.Customers.Any(e => e.Id == id);
+        }
+
+        public override async Task<IActionResult> ChangeActiveStatus(string id)
+        {
+            if (!CustomerExists(id))
+            {
+                return NotFound();
+            }
+        
+            var customer = await GetCustomerById(id);
+            customer.IsActive = !customer.IsActive;
+            customer.UpdatedBy = GteUserId();
+            _context.Update(customer);
+            await _context.SaveChangesAsync();
+        
+            return RedirectToAction(nameof(Index));
+        }
+        
+        public override async Task<IActionResult> SoftDelete(string id)
+        {
+            if (!CustomerExists(id))
+            {
+                return NotFound();
+            }
+        
+            var customer = await GetCustomerById(id);
+            customer.IsDeleted = !customer.IsDeleted;
+            customer.UpdatedBy = GteUserId();
+            customer.DeletedBy = GteUserId();
+            // customer.DeletedAt = DateTime.Now;
+            _context.Update(customer);
+            await _context.SaveChangesAsync();
+        
+            return RedirectToAction(nameof(Index));
+        }
+        
+        public override async Task<IActionResult> Restore(string id)
+        {
+            if (!CustomerExists(id))
+            {
+                return NotFound();
+            }
+        
+            var customer = await GetCustomerById(id);
+            customer.IsDeleted = !customer.IsDeleted;
+            customer.UpdatedBy = GteUserId();
+            _context.Update(customer);
+            await _context.SaveChangesAsync();
+        
+            return RedirectToAction(nameof(Index));
+        }
+        
+        
+        private async Task<Customer> GetCustomerById(string id)
+        {
+            var customer = await _context.Customers.FindAsync(id);
+            return customer;
         }
     }
 }

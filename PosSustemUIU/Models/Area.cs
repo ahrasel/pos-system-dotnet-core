@@ -10,11 +10,21 @@ namespace PosSustemUIU.Models {
         [Required]
         [Display (Name = "Area Name")]
         public string Name { get; set; }
+        [Display (Name = "Description")]
         public string Description { get; set; }
+
+        [Display (Name = "Text Code")]
         public string TextCode { get; set; }
+
+        [Display (Name = "Numeric Code")]
         public string NumericCode { get; set; }
+
+        [Display (Name = "Active")]
         public bool IsActive { get; set; }
+
+        [Display (Name = "Others")]
         public string Meta { get; set; }
+
         public bool IsDeleted { get; set; }
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }

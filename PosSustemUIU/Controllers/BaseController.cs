@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PosSustemUIU.Models;
 
 namespace PosSustemUIU.Controllers
 {
@@ -49,6 +52,11 @@ namespace PosSustemUIU.Controllers
                       + Guid.NewGuid().ToString().Substring(0, 4)
                       + Path.GetExtension(fileName);
         }
-        
+
+        protected string GteUserId(){
+            return this.User.FindFirstValue(ClaimTypes.NameIdentifier);;
+        }
+
+
     }
 }

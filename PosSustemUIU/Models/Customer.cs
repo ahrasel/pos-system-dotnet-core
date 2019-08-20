@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PosSustemUIU.Models {
     public class Customer {
@@ -14,6 +15,9 @@ namespace PosSustemUIU.Models {
         [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+
+        [NotMapped]
+        public string FullName => $"{FirstName} {LastName}";
 
         [Required]
         [Display(Name = "Email")]
@@ -38,6 +42,8 @@ namespace PosSustemUIU.Models {
         public string Image { get; set; }
 
         [Display(Name = "Customer Area")]
+        [NotMapped]
+        public string CustomerAreaId { get; set; }
         public Area Area { get; set; }
 
         [Display(Name = "Active")]

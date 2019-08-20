@@ -281,9 +281,12 @@ namespace PosSustemUIU.Data.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Address");
+                    b.Property<string>("Address")
+                        .IsRequired();
 
-                    b.Property<string>("AreaId");
+                    b.Property<string>("AreaId1");
+
+                    b.Property<string>("AreaIdId");
 
                     b.Property<string>("CreatedBy");
 
@@ -291,9 +294,11 @@ namespace PosSustemUIU.Data.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .IsRequired();
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("FirstName")
+                        .IsRequired();
 
                     b.Property<string>("Image");
 
@@ -301,19 +306,23 @@ namespace PosSustemUIU.Data.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("LastName")
+                        .IsRequired();
 
                     b.Property<string>("Meta");
 
                     b.Property<string>("OtherContact");
 
-                    b.Property<string>("PhoneNumber");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired();
 
                     b.Property<string>("UpdatedBy");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AreaId");
+                    b.HasIndex("AreaId1");
+
+                    b.HasIndex("AreaIdId");
 
                     b.HasIndex("Email", "PhoneNumber")
                         .IsUnique();
@@ -667,8 +676,12 @@ namespace PosSustemUIU.Data.Migrations
                 {
                     b.HasOne("PosSustemUIU.Models.Area", "Area")
                         .WithMany("Customers")
-                        .HasForeignKey("AreaId")
+                        .HasForeignKey("AreaId1")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("PosSustemUIU.Models.Area", "AreaId")
+                        .WithMany()
+                        .HasForeignKey("AreaIdId");
                 });
 
             modelBuilder.Entity("PosSustemUIU.Models.Product", b =>

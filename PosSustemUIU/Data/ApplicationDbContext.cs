@@ -67,8 +67,9 @@ namespace PosSustemUIU.Data {
                 .IsUnique ();
 
             builder.Entity<Customer> ()
-                .HasOne (u => u.Area)
+                .HasOne<Area> (u => u.Area)
                 .WithMany (c => c.Customers)
+                // .HasForeignKey(c => c.AreaId)
                 .OnDelete (DeleteBehavior.Cascade);
 
         }

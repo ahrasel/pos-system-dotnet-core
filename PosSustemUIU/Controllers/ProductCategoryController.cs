@@ -10,7 +10,7 @@ using PosSustemUIU.Models;
 
 namespace PosSustemUIU.Controllers
 {
-    public class ProductCategoryController : Controller
+    public class ProductCategoryController : BaseCotroller
     {
         private readonly ApplicationDbContext _context;
 
@@ -50,14 +50,13 @@ namespace PosSustemUIU.Controllers
         }
 
         // POST: ProductCategory/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Code,IsActive,Meta,IsDeleted,CreatedBy,UpdatedBy,DeletedBy,CreatedAt,DeletedAt")] ProductCategory productCategory)
+        public async Task<IActionResult> Create([Bind("Name,Description,Code,IsActive,Meta")] ProductCategory productCategory)
         {
             if (ModelState.IsValid)
             {
+                productCategory.CreatedBy = GteUserId();
                 _context.Add(productCategory);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -82,11 +81,9 @@ namespace PosSustemUIU.Controllers
         }
 
         // POST: ProductCategory/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Description,Code,IsActive,Meta,IsDeleted,CreatedBy,UpdatedBy,DeletedBy,CreatedAt,DeletedAt")] ProductCategory productCategory)
+        public async Task<IActionResult> Edit(string id, [Bind("Name,Description,Code,IsActive,Meta")] ProductCategory productCategory)
         {
             if (id != productCategory.Id)
             {
@@ -97,6 +94,7 @@ namespace PosSustemUIU.Controllers
             {
                 try
                 {
+                    productCategory.UpdatedBy = GteUserId();
                     _context.Update(productCategory);
                     await _context.SaveChangesAsync();
                 }
@@ -148,6 +146,63 @@ namespace PosSustemUIU.Controllers
         private bool ProductCategoryExists(string id)
         {
             return _context.ProductCategories.Any(e => e.Id == id);
+        }
+
+        public override async Task<IActionResult> ChangeActiveStatus(string id)
+        {
+            if (!ProductCategoryExists(id))
+            {
+                return NotFound();
+            }
+        
+            var productCategory = await GetCategoryById(id);
+            productCategory.IsActive = !productCategory.IsActive;
+            productCategory.UpdatedBy = GteUserId();
+            _context.Update(productCategory);
+            await _context.SaveChangesAsync();
+        
+            return RedirectToAction(nameof(Index));
+        }
+        
+        public override async Task<IActionResult> SoftDelete(string id)
+        {
+            if (!ProductCategoryExists(id))
+            {
+                return NotFound();
+            }
+        
+            var productCategory = await GetCategoryById(id);
+            productCategory.IsDeleted = !productCategory.IsDeleted;
+            productCategory.UpdatedBy = GteUserId();
+            productCategory.DeletedBy = GteUserId();
+            productCategory.DeletedAt = DateTime.Now;
+            _context.Update(productCategory);
+            await _context.SaveChangesAsync();
+        
+            return RedirectToAction(nameof(Index));
+        }
+        
+        public override async Task<IActionResult> Restore(string id)
+        {
+            if (!ProductCategoryExists(id))
+            {
+                return NotFound();
+            }
+        
+            var productCategory = await GetCategoryById(id);
+            productCategory.IsDeleted = !productCategory.IsDeleted;
+            productCategory.UpdatedBy = GteUserId();
+            _context.Update(productCategory);
+            await _context.SaveChangesAsync();
+        
+            return RedirectToAction(nameof(Index));
+        }
+        
+        
+        private async Task<ProductCategory> GetCategoryById(string id)
+        {
+            var productCategory = await _context.ProductCategories.FindAsync(id);
+            return productCategory;
         }
     }
 }

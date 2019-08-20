@@ -11,9 +11,13 @@ namespace PosSustemUIU.Models {
         [Display (Name = "Category name")]
         [MaxLength (50)]
         public string Name { get; set; }
+        [Display(Name = "Description")]
         public string Description { get; set; }
+        [Display(Name = "Category Code")]
         public string Code { get; set; }
+        [Display(Name = "Active")]
         public bool IsActive { get; set; }
+        [Display(Name = "Other Note")]
         public string Meta { get; set; }
         public bool IsDeleted { get; set; }
         public ApplicationUser ApplicationUser { get; set; }

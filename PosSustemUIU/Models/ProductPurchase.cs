@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PosSustemUIU.Models {
     public class ProductPurchase {
@@ -23,10 +24,15 @@ namespace PosSustemUIU.Models {
         public DateTime CreatedAt { get; set; }
         public DateTime DeletedAt { get; set; }
 
-        [Required]
         public Supplier Supplier { get; set; }
         [Required]
+        [ForeignKey("Supplier")]
+        public string SupplierId { get; set; }
+
         public TransectionType TransectionType { get; set; }
+        [Required]
+        [ForeignKey("TransectionType")]
+        public string TransectionTypeOId { get; set; }
 
     }
 }

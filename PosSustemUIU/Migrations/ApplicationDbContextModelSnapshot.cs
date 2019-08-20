@@ -2,17 +2,15 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PosSustemUIU.Data;
 
-namespace PosSustemUIU.Data.Migrations
+namespace PosSustemUIU.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190818095046_Add_Sup_Brand_Area_table")]
-    partial class Add_Sup_Brand_Area_table
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -207,9 +205,9 @@ namespace PosSustemUIU.Data.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Created");
-
                     b.Property<DateTime>("CreatedAt");
+
+                    b.Property<string>("CreatedBy");
 
                     b.Property<DateTime>("DeletedAt");
 
@@ -247,9 +245,9 @@ namespace PosSustemUIU.Data.Migrations
 
                     b.Property<string>("Code");
 
-                    b.Property<string>("Created");
-
                     b.Property<DateTime>("CreatedAt");
+
+                    b.Property<string>("CreatedBy");
 
                     b.Property<DateTime>("DeletedAt");
 
@@ -283,19 +281,22 @@ namespace PosSustemUIU.Data.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Address");
+                    b.Property<string>("Address")
+                        .IsRequired();
 
                     b.Property<string>("AreaId");
 
-                    b.Property<string>("Created");
+                    b.Property<string>("CreatedBy");
 
                     b.Property<string>("DeletedBy");
 
                     b.Property<string>("Description");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .IsRequired();
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("FirstName")
+                        .IsRequired();
 
                     b.Property<string>("Image");
 
@@ -303,13 +304,15 @@ namespace PosSustemUIU.Data.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("LastName")
+                        .IsRequired();
 
                     b.Property<string>("Meta");
 
                     b.Property<string>("OtherContact");
 
-                    b.Property<string>("PhoneNumber");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired();
 
                     b.Property<string>("UpdatedBy");
 
@@ -330,13 +333,14 @@ namespace PosSustemUIU.Data.Migrations
 
                     b.Property<string>("ApplicationUserId");
 
-                    b.Property<string>("BrandId");
+                    b.Property<string>("BrandId")
+                        .IsRequired();
 
                     b.Property<string>("Code");
 
-                    b.Property<string>("Created");
-
                     b.Property<DateTime>("CreatedAt");
+
+                    b.Property<string>("CreatedBy");
 
                     b.Property<DateTime>("DeletedAt");
 
@@ -362,9 +366,11 @@ namespace PosSustemUIU.Data.Migrations
 
                     b.Property<double>("Price");
 
-                    b.Property<string>("ProductCategoryId");
+                    b.Property<string>("ProductCategoryID")
+                        .IsRequired();
 
-                    b.Property<string>("SupplierId");
+                    b.Property<string>("SupplierId")
+                        .IsRequired();
 
                     b.Property<double>("Unit");
 
@@ -378,7 +384,7 @@ namespace PosSustemUIU.Data.Migrations
 
                     b.HasIndex("BrandId");
 
-                    b.HasIndex("ProductCategoryId");
+                    b.HasIndex("ProductCategoryID");
 
                     b.HasIndex("SupplierId");
 
@@ -397,9 +403,9 @@ namespace PosSustemUIU.Data.Migrations
 
                     b.Property<string>("Code");
 
-                    b.Property<string>("Created");
-
                     b.Property<DateTime>("CreatedAt");
+
+                    b.Property<string>("CreatedBy");
 
                     b.Property<DateTime>("DeletedAt");
 
@@ -429,6 +435,122 @@ namespace PosSustemUIU.Data.Migrations
                     b.ToTable("ProductCategories");
                 });
 
+            modelBuilder.Entity("PosSustemUIU.Models.ProductPurchase", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Created");
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<DateTime>("DeletedAt");
+
+                    b.Property<string>("DeletedBy");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<bool>("IsVatPaid");
+
+                    b.Property<string>("Meta");
+
+                    b.Property<string>("Note");
+
+                    b.Property<DateTime>("PurchaseDate");
+
+                    b.Property<double>("ReceivingCost");
+
+                    b.Property<string>("ReferenceExternal");
+
+                    b.Property<string>("ReferenceInternal");
+
+                    b.Property<string>("SupplierId")
+                        .IsRequired();
+
+                    b.Property<double>("TotalPrice");
+
+                    b.Property<int>("TotalQuantity");
+
+                    b.Property<double>("TotalVat");
+
+                    b.Property<string>("TransectionTypeOId")
+                        .IsRequired();
+
+                    b.Property<string>("UpdatedBy");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SupplierId");
+
+                    b.HasIndex("TransectionTypeOId");
+
+                    b.ToTable("ProductPurchases");
+                });
+
+            modelBuilder.Entity("PosSustemUIU.Models.ProductSale", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<string>("CreatedBy");
+
+                    b.Property<string>("CustomerId")
+                        .IsRequired();
+
+                    b.Property<string>("CustomerMeta");
+
+                    b.Property<DateTime>("DeletedAt");
+
+                    b.Property<string>("DeletedBy");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<bool>("IsVatPaid");
+
+                    b.Property<string>("Meta");
+
+                    b.Property<string>("Note");
+
+                    b.Property<string>("PaymentNote");
+
+                    b.Property<DateTime>("PostingDate");
+
+                    b.Property<double>("ReceivingCost");
+
+                    b.Property<string>("ReferenceExternal");
+
+                    b.Property<string>("ReferenceInternal");
+
+                    b.Property<DateTime>("SaleDate");
+
+                    b.Property<double>("TotalDiscount");
+
+                    b.Property<double>("TotalPrice");
+
+                    b.Property<int>("TotalQuantity");
+
+                    b.Property<double>("TotalVat");
+
+                    b.Property<string>("TransectionTypeOId")
+                        .IsRequired();
+
+                    b.Property<string>("UpdatedBy");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("TransectionTypeOId");
+
+                    b.ToTable("ProductSales");
+                });
+
             modelBuilder.Entity("PosSustemUIU.Models.Supplier", b =>
                 {
                     b.Property<string>("Id")
@@ -436,9 +558,9 @@ namespace PosSustemUIU.Data.Migrations
 
                     b.Property<string>("Code");
 
-                    b.Property<string>("Created");
-
                     b.Property<DateTime>("CreatedAt");
+
+                    b.Property<string>("CreatedBy");
 
                     b.Property<DateTime>("DeletedAt");
 
@@ -471,6 +593,37 @@ namespace PosSustemUIU.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Suppliers");
+                });
+
+            modelBuilder.Entity("PosSustemUIU.Models.TransectionType", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<string>("CreatedBy");
+
+                    b.Property<DateTime>("DeletedAt");
+
+                    b.Property<string>("DeletedBy");
+
+                    b.Property<string>("GroupName");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Meta");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<string>("UpdatedBy");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TransectionType");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -539,7 +692,7 @@ namespace PosSustemUIU.Data.Migrations
 
                     b.HasOne("PosSustemUIU.Models.ProductCategory", "ProductCategory")
                         .WithMany("Products")
-                        .HasForeignKey("ProductCategoryId")
+                        .HasForeignKey("ProductCategoryID")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PosSustemUIU.Models.Supplier", "Supplier")
@@ -553,6 +706,32 @@ namespace PosSustemUIU.Data.Migrations
                     b.HasOne("PosSustemUIU.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("ProductCategories")
                         .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("PosSustemUIU.Models.ProductPurchase", b =>
+                {
+                    b.HasOne("PosSustemUIU.Models.Supplier", "Supplier")
+                        .WithMany()
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("PosSustemUIU.Models.TransectionType", "TransectionType")
+                        .WithMany()
+                        .HasForeignKey("TransectionTypeOId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("PosSustemUIU.Models.ProductSale", b =>
+                {
+                    b.HasOne("PosSustemUIU.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("PosSustemUIU.Models.TransectionType", "TransectionType")
+                        .WithMany()
+                        .HasForeignKey("TransectionTypeOId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

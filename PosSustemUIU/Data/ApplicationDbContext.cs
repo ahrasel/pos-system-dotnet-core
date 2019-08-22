@@ -92,6 +92,7 @@ namespace PosSustemUIU.Data {
         public DbSet<ProductUnit> ProductUnits { get; set; }
         public DbSet<ProductVat> ProductVats { get; set; }
         public DbSet<ProductPrice> ProductPrices { get; set; }
+        public DbSet<ProductDiscount> ProductDiscounts { get; set; }
         public DbSet<StoreConfiguration>  StoreConfigurations { get; set; }
 
     }

@@ -7,6 +7,7 @@ namespace PosSustemUIU.Models
     {
         [Key]
         public string Id { get; set; }
+        [Required]
         [Display(Name = "Unit Type")]
         public string Name { get; set; }
         [Display(Name = "Unit Type Description")]

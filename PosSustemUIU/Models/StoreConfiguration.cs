@@ -8,14 +8,18 @@ namespace PosSustemUIU.Models
         [Key]
         public string Id { get; set; }
         [Display(Name = "Store Name")]
+        [Required]
         public string Name { get; set; }
         [Display(Name = "Store Sologan")]
+        [Required]
         public string Sologan { get; set; }
         [Display(Name = "Store Address")]
+        [Required]
         public string Address { get; set; }
         [Display(Name = "Store Logo")]
         public string Logo { get; set; }
         [Display(Name = "Contact Number")]
+        [Required]
         public string MainContact { get; set; }
         [Display(Name = "Other Contact Number")]
         public string OtherContact { get; set; }

@@ -8,6 +8,7 @@ namespace PosSustemUIU.Models
         [Key]
         public string Id { get; set; }
         [Display(Name = "Group Name")]
+        [Required]
         public string Name { get; set; }
         [Display(Name = "Group Code")]
         public string Code { get; set; }

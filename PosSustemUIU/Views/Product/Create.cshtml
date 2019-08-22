@@ -103,7 +103,7 @@
                             <div class="form-group">
                                 <label asp-for="ProductGroupID" class="control-label" style="margin-bottom: 3px;"></label>
                                 <select asp-for="ProductGroupID" class="select2 form-control custom-select" style="width: 100%;">
-                                            <option selected disabled>Select Area</option>
+                                            <option selected disabled>Select Product Group</option>
                                             @foreach (var productGroup in Model.ProductGroups)
                                             {
                                                 <option value="@productGroup.Id">@productGroup.Name</option>
@@ -115,18 +115,17 @@
                             <div class="form-group">
                                 <label asp-for="UnitId" class="control-label" style="margin-bottom: 3px;"></label>
                                 <select asp-for="UnitId" class="select2 form-control custom-select" style="width: 100%;">
-                                            <option selected disabled>Select Area</option>
-                                            @foreach (var nitType in Model.UnitTypes)
+                                            <option selected disabled>Select Unit Type</option>
+                                            @foreach (var unitType in Model.UnitTypes)
                                             {
-                                                <option value="@nitType.Id">@nitType.Name</option>
+                                                <option value="@unitType.Id">@unitType.Name</option>
                                                 
                                             }
                                         </select>
                                 <span asp-validation-for="UnitId" class="text-danger"></span>
                             </div>
-                            
-                            
                         </div>
+
                         <div class="col-sm-12">
                              <div class="form-group">
                                 <label asp-for="KeyWord" class="control-label"></label>

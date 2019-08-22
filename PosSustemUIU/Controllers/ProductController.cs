@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PosSustemUIU.Data;
 using PosSustemUIU.Models;
+using PosSustemUIU.Models.BLL;
 using PosSustemUIU.ViewModels;
 
 namespace PosSustemUIU.Controllers
@@ -16,11 +17,13 @@ namespace PosSustemUIU.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IHostingEnvironment _environment;
+        private readonly ProductManager _manager;
 
         public ProductController(ApplicationDbContext context, IHostingEnvironment environment)
         {
             _context = context;
             _environment = environment;
+            _manager = new ProductManager(context);
         }
 
         // GET: Product
@@ -56,11 +59,10 @@ namespace PosSustemUIU.Controllers
         // POST: Product/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Description,Image,KeyWord,Code,ExpireDate,IsActive,Meta,IsDeleted,ProductCategoryID,SupplierId,BrandId,ProductGroupID")] ProductVM productVM)
+        public async Task<IActionResult> Create([Bind("Name,Description,Image,KeyWord,Code,ExpireDate,IsActive,Meta,IsDeleted,ProductCategoryID,SupplierId,BrandId,ProductGroupID,Barcode,UnitId,Price,Vat")] ProductVM productVM)
         {
             if (ModelState.IsValid)
             {
-
                 var files = HttpContext.Request.Form.Files;
                 if (files != null)
                 {
@@ -70,28 +72,12 @@ namespace PosSustemUIU.Controllers
                         productVM.Image = fileNames[0];
                     }
                 }
-
-
-                var product = new Product{
-                    Name = productVM.Name,
-                    Description = productVM.Description,
-                    Image = productVM.Image,
-                    KeyWord = productVM.KeyWord,
-                    Code = productVM.Code,
-                    ExpireDate = productVM.ExpireDate,
-                    IsActive = productVM.IsActive,
-                    Meta = productVM.Meta,
-                    ProductCategoryID = productVM.ProductCategoryID,
-                    SupplierId = productVM.SupplierId,
-                    BrandId = productVM.BrandId,
-                    ProductGroupID = productVM.ProductGroupID,
-                    CreatedBy = GteUserId(),
-                    CreatedAt =DateTime.Now,
-                };
-
-                _context.Add(product);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                productVM.CreatedBy = GteUserId();
+                var status = _manager.SaveProductAsync(productVM);
+                if (await status)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
             }
             productVM.Categories = await _context.ProductCategories.Where(c => c.IsActive == true).ToListAsync();
             productVM.Suppliers = await _context.Suppliers.Where(s => s.IsActive == true).ToListAsync();
@@ -126,7 +112,7 @@ namespace PosSustemUIU.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Description,Image,KeyWord,Code,ExpireDate,IsActive,Meta,IsDeleted,ProductCategoryID,SupplierId,BrandId,ProductGroupID,CreatedBy,UpdatedBy,DeletedBy,CreatedAt,DeletedAt")] ProductVM productVM)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Description,Image,KeyWord,Code,ExpireDate,IsActive,Meta,IsDeleted,ProductCategoryID,SupplierId,BrandId,ProductGroupID,Barcode,UnitId,Price,Vat")] ProductVM productVM)
         {
             if (id != productVM.Id)
             {

@@ -1,11 +1,15 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PosSustemUIU.Models
 {
     public class ProductPrice
     {
+        [Key]
         public string Id { get; set; }
+        [ForeignKey("ProductId")]
+        public Product Product { get; set; }
         public string ProductId { get; set; }
         public double Price { get; set; }
         [Display(Name = "Active")]

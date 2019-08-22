@@ -1,12 +1,16 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PosSustemUIU.Models
 {
     public class ProductBarcode
     {
+        [Key]
         public string Id { get; set; }
         public string Barcode { get; set; }
+        [ForeignKey("ProductId")]
+        public Product Product { get; set; }
         public string ProductId { get; set; }
         [Display(Name = "Active")]
         public bool IsActive { get; set; }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -51,6 +51,10 @@ namespace PosSustemUIU.Data {
                 .HasIndex (u => u.Name)
                 .IsUnique ();
 
+            //Unit type
+            builder.Entity<UnitType>()
+                .HasIndex(u => new { u.Name, u.Code });
+
             //supplier
             builder.Entity<Supplier> ()
                 .HasIndex (u => new { u.Name, u.Email, u.MainContact, u.Code })
@@ -71,6 +75,7 @@ namespace PosSustemUIU.Data {
                 .WithMany (c => c.Customers)
                 // .HasForeignKey(c => c.AreaId)
                 .OnDelete (DeleteBehavior.Cascade);
+            
 
         }
         public DbSet<Area> Areas { get; set; }
@@ -81,6 +86,13 @@ namespace PosSustemUIU.Data {
         public DbSet<Customer> Customers { get; set; }
         public DbSet<ProductPurchase> ProductPurchases { get; set; }
         public DbSet<ProductSale> ProductSales { get; set; }
+        public DbSet<UnitType> UnitTypes { get; set; }
+        public DbSet<ProductGroup> ProductGroups { get; set; }
+        public DbSet<ProductBarcode> ProductBarcodes { get; set; }
+        public DbSet<ProductUnit> ProductUnits { get; set; }
+        public DbSet<ProductVat> ProductVats { get; set; }
+        public DbSet<ProductPrice> ProductPrices { get; set; }
+        public DbSet<StoreConfiguration>  StoreConfigurations { get; set; }
 
     }
 }

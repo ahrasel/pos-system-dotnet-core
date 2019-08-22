@@ -5,9 +5,13 @@ namespace PosSustemUIU.Models
 {
     public class ProductGroup
     {
+        [Key]
         public string Id { get; set; }
+        [Display(Name = "Group Name")]
         public string Name { get; set; }
+        [Display(Name = "Group Code")]
         public string Code { get; set; }
+        [Display(Name = "Group Description")]
         public string Description { get; set; }
         [Display(Name = "Active")]
         public bool IsActive { get; set; }

@@ -1,1 +1,5 @@
-dotnet aspnet-codegenerator controller -name ProductController -m Product -dc ApplicationDbContext --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries
+dotnet aspnet-codegenerator controller -name UnitTypeController -m UnitType -dc ApplicationDbContext --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries
+
+
+dotnet ef migrations add [migration name] 
+dotnet ef database update

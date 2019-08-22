@@ -5,14 +5,18 @@ namespace PosSustemUIU.Models
 {
     public class UnitType
     {
+        [Key]
         public string Id { get; set; }
+        [Display(Name = "Unit Type")]
         public string Name { get; set; }
+        [Display(Name = "Unit Type Description")]
         public string Description { get; set; }
+        [Display(Name = "Unit Code")]
         public string Code { get; set; }
         [Display(Name = "Active")]
         public bool IsActive { get; set; }
         
-        [Display(Name = "Others")]
+        [Display(Name = "Other Note")]
         public string Meta { get; set; }
         public bool IsDeleted { get; set; }
         public string CreatedBy { get; set; }

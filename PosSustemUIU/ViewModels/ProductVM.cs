@@ -65,5 +65,12 @@ namespace PosSustemUIU.ViewModels
         public IEnumerable<Brand> Brands { get; set; }
         public IEnumerable<ProductGroup> ProductGroups { get; set; }
         public IEnumerable<UnitType> UnitTypes { get; set; }
+
+        public ProductBarcode ProductBarcode { get; set; }
+        public ProductPrice ProductPrice { get; set; }
+        public ProductDiscount ProductDiscount { get; set; }
+        public ProductVat ProductVat { get; set; }
+        public ProductUnit ProductUnit { get; set; }
+
     }
 }

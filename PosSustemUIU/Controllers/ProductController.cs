@@ -53,7 +53,7 @@ namespace PosSustemUIU.Controllers
         // GET: Product/Create
         public async Task<IActionResult> Create()
         {   
-            return View(await GetProductVMAsync());
+            return View(await _manager.GetProductVMAsync());
         }
 
         // POST: Product/Create
@@ -78,6 +78,10 @@ namespace PosSustemUIU.Controllers
                 {
                     return RedirectToAction(nameof(Index));
                 }
+                else
+                {
+                    return View(await _manager.GetProductVMAsync());
+                }
             }
             productVM.Categories = await _context.ProductCategories.Where(c => c.IsActive == true).ToListAsync();
             productVM.Suppliers = await _context.Suppliers.Where(s => s.IsActive == true).ToListAsync();
@@ -98,18 +102,17 @@ namespace PosSustemUIU.Controllers
                 return NotFound();
             }
 
-            var productVM = await _context.Products.FindAsync(id);
-            if (productVM == null)
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
             {
                 return NotFound();
             }
-            
+            var productVM = await _manager.GetRelatedData(await _manager.ProductToProductVMAsync(product));
+
             return View(productVM);
         }
 
         // POST: Product/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Description,Image,KeyWord,Code,ExpireDate,IsActive,Meta,IsDeleted,ProductCategoryID,SupplierId,BrandId,ProductGroupID,Barcode,UnitId,Price,Vat")] ProductVM productVM)
@@ -123,8 +126,7 @@ namespace PosSustemUIU.Controllers
             {
                 try
                 {
-                    _context.Update(productVM);
-                    await _context.SaveChangesAsync();
+                    bool status = await _manager.UpdateProductAsync(productVM);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -174,19 +176,6 @@ namespace PosSustemUIU.Controllers
         private bool ProductExists(string id)
         {
             return _context.Products.Any(e => e.Id == id);
-        }
-
-        private async Task<ProductVM> GetProductVMAsync(){
-            var product = new ProductVM();
-            product.Categories = await _context.ProductCategories.Where(c => c.IsActive == true).ToListAsync();
-            product.Suppliers = await _context.Suppliers.Where(s => s.IsActive == true).ToListAsync();
-            product.Suppliers = await _context.Suppliers.Where(s => s.IsActive == true).ToListAsync();
-            product.Brands = await _context.Brands.Where(b => b.IsActive == true).ToListAsync();
-            product.Brands = await _context.Brands.Where(b => b.IsActive == true).ToListAsync();
-            product.ProductGroups = await _context.ProductGroups.Where(g => g.IsActive == true).ToListAsync();
-            product.UnitTypes = await _context.UnitTypes.Where(g => g.IsActive == true).ToListAsync();
-
-            return product;
         }
 
         public override async Task<IActionResult> ChangeActiveStatus(string id)

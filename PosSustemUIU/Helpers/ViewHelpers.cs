@@ -20,7 +20,7 @@ namespace PosSustemUIU.Helpers
             {
                 return (string) value;
             }
-            return "undefined";
+            return "NA";
         }
 
         public static string Check(Boolean condition, String ifTrue, String ifFalse)

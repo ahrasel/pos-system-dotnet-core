@@ -6,9 +6,13 @@ namespace PosSustemUIU.Models {
         [Key]
         public string Id { get; set; }
         [Required]
+        [Display(Name = "Type Name")]
         public string Name { get; set; }
+        [Display(Name = "Group Name")]
         public string GroupName { get; set; }
+        [Display(Name = "Active")]
         public bool IsActive { get; set; }
+        [Display(Name = "Other Note")]
         public string Meta { get; set; }
         public bool IsDeleted { get; set; }
         public string CreatedBy { get; set; }

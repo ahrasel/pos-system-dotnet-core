@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PosSustemUIU.Data;
 
 namespace PosSustemUIU.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190830155548_update_purchase_table")]
+    partial class update_purchase_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -838,44 +840,6 @@ namespace PosSustemUIU.Migrations
                     b.ToTable("Suppliers");
                 });
 
-            modelBuilder.Entity("PosSustemUIU.Models.Transection", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<string>("CreatedBy");
-
-                    b.Property<DateTime>("DeletedAt");
-
-                    b.Property<string>("DeletedBy");
-
-                    b.Property<DateTime>("ExpireDate");
-
-                    b.Property<string>("ParentId");
-
-                    b.Property<double>("Price");
-
-                    b.Property<string>("ProductId");
-
-                    b.Property<int>("Quantity");
-
-                    b.Property<string>("TransectionTypeId");
-
-                    b.Property<string>("UpdatedBy");
-
-                    b.Property<double>("Vat");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("TransectionTypeId");
-
-                    b.ToTable("Transections");
-                });
-
             modelBuilder.Entity("PosSustemUIU.Models.TransectionType", b =>
                 {
                     b.Property<string>("Id")
@@ -1088,17 +1052,6 @@ namespace PosSustemUIU.Migrations
                     b.HasOne("PosSustemUIU.Models.Product", "Product")
                         .WithMany("ProductVats")
                         .HasForeignKey("ProductId");
-                });
-
-            modelBuilder.Entity("PosSustemUIU.Models.Transection", b =>
-                {
-                    b.HasOne("PosSustemUIU.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
-
-                    b.HasOne("PosSustemUIU.Models.TransectionType", "TransectionType")
-                        .WithMany()
-                        .HasForeignKey("TransectionTypeId");
                 });
 #pragma warning restore 612, 618
         }

@@ -95,6 +95,7 @@ namespace PosSustemUIU.Data {
         public DbSet<ProductDiscount> ProductDiscounts { get; set; }
         public DbSet<StoreConfiguration>  StoreConfigurations { get; set; }
         public DbSet<TransectionType> TransectionType { get; set; }
+        public DbSet<Transection> Transections { get; set; }
 
     }
 }

@@ -1,0 +1,54 @@
+@model IEnumerable<PosSustemUIU.Models.ProductPurchase>
+
+@{
+    ViewData["Title"] = "Purshase";
+}
+
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <h5 class="card-title">Purshase</h5>
+            </div>
+            <div class="col-sm-6">
+                <button type="button" class="btn btn-primary btn-sm float-right">
+                    <a  asp-action="Create" class="text-white">Add New</a>
+                </button>   
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="zero_config" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center">SN</th>
+                        <th class="text-center">Quantity</th>
+                        <th class="text-center">Total Price</th>
+                        <th class="text-center">Paid Ammount</th>
+                        <th class="text-center">Unpaid Ammount</th>
+                        <th class="text-center">Total Vat</th>
+                        <th class="text-center">Purchase Date</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+                
+                <tfoot>
+                    <tr>
+                        <th class="text-center">SN</th>
+                        <th class="text-center">Quantity</th>
+                        <th class="text-center">Total Price</th>
+                        <th class="text-center">Paid Ammount</th>
+                        <th class="text-center">Unpaid Ammount</th>
+                        <th class="text-center">Total Vat</th>
+                        <th class="text-center">Purchase Date</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

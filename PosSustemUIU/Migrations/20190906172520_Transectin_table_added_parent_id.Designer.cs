@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PosSustemUIU.Data;
 
 namespace PosSustemUIU.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190906172520_Transectin_table_added_parent_id")]
+    partial class Transectin_table_added_parent_id
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -851,7 +853,7 @@ namespace PosSustemUIU.Migrations
 
                     b.Property<string>("DeletedBy");
 
-                    b.Property<DateTime>("ExpireDate");
+                    b.Property<string>("ExpireDate");
 
                     b.Property<string>("ParentId");
 

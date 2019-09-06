@@ -52,7 +52,7 @@ namespace PosSustemUIU.ViewModels
         public double Vat { get; set; }
         [Display(Name = "Product Discount")]
         public double Discount { get; set; }
-
+        
 
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }

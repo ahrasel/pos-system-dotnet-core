@@ -15,10 +15,13 @@ namespace PosSustemUIU.Models {
         public string Note { get; set; }
         public bool IsVatPaid { get; set; }
         public double ReceivingCost { get; set; }
+        public string PurchaseNote { get; set; }
+        public string DeliveryNote { get; set; }
+        public string Attachment { get; set; }
         public bool IsActive { get; set; }
         public string Meta { get; set; }
         public bool IsDeleted { get; set; }
-        public string Created { get; set; }
+        public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
         public string DeletedBy { get; set; }
         public DateTime CreatedAt { get; set; }
@@ -33,6 +36,5 @@ namespace PosSustemUIU.Models {
         [Required]
         [ForeignKey("TransectionType")]
         public string TransectionTypeOId { get; set; }
-
     }
 }

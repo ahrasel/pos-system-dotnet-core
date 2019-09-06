@@ -54,7 +54,7 @@ namespace PosSustemUIU.Controllers
         }
 
         protected string GteUserId(){
-            return this.User.FindFirstValue(ClaimTypes.NameIdentifier);;
+            return this.User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
 

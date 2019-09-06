@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using PosSustemUIU.Models;
+using PosSustemUIU.ViewModels;
 
 namespace PosSustemUIU.Helpers
 {
@@ -27,5 +29,6 @@ namespace PosSustemUIU.Helpers
         {
             return condition ? ifTrue : ifFalse;
         }
+        
     }
 }

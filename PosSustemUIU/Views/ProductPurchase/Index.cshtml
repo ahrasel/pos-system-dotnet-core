@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Purshase";
+    int count = 0;
+
 }
 
 <div class="card">
@@ -33,7 +35,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+                        @foreach (var productPurchase in Model)
+                        {
+                            count ++;
+                            <tr>
+                                <td class="text-center">@count</td>
+                                <td class="text-center">@productPurchase.TotalQuantity</td>
+                                <td class="text-center">@productPurchase.TotalPrice</td>
+                                <td class="text-center">@productPurchase.ReceivingCost</td>
+                                <td class="text-center">0</td>
+                                <td class="text-center">@productPurchase.TotalVat</td>
+                                <td class="text-center">@productPurchase.PurchaseDate</td>
+                                <td class="text-center">
+                                     <a  title="Show" asp-action="Details" asp-route-id="@productPurchase.Id" class="btn btn-cyan btn-sm text-white"><i class="fas fa-eye" aria-hidden="true"></i></a>
+                                </td> 
+                            </tr>   
+                        }
+                        
                 </tbody>
                 
                 <tfoot>

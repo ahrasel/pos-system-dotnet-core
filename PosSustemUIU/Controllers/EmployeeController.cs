@@ -78,7 +78,7 @@ namespace PosSustemUIU.Controllers
             {
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
-                UserName = employee.UserName,
+                UserName = employee.Email,
                 Email = employee.Email,
                 PhoneNumber = employee.PhoneNumber,
                 DateOfBirth = employee.DateOfBirth,

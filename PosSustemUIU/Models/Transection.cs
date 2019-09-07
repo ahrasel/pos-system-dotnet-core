@@ -19,6 +19,7 @@ namespace PosSustemUIU.Models
         public double Price { get; set; }
         public double Vat { get; set; }
         public int Quantity { get; set; }
+        public int RemainingQuantity { get; set; }
         public DateTime ExpireDate { get; set; }
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }

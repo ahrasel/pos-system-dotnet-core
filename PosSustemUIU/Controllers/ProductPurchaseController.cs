@@ -205,6 +205,7 @@ namespace PosSustemUIU.Controllers
                     ProductId = product.ProductId,
                     Price = double.Parse(product.Price),
                     Quantity = int.Parse(product.Quantity),
+                    RemainingQuantity = int.Parse(product.Quantity),
                     ExpireDate = Convert.ToDateTime(product.ExpireDate),
                     CreatedBy = GteUserId(),
                     TransectionTypeId = transectionTypeId

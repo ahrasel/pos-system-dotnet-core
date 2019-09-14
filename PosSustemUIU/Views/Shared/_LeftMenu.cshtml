@@ -11,7 +11,7 @@
                 </li>
 
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-controller="QuickSale" asp-action="Index" aria-expanded="false">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-controller="ProductSale" asp-action="Create" aria-expanded="false">
                         <i class="mdi mdi-blur-linear"></i>
                         <span class="hide-menu">Quick Sale</span>
                     </a>
@@ -70,7 +70,7 @@
                     </ul>
                 </li>
 
-                <li class="sidebar-item">
+                <!-- <li class="sidebar-item">
                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-settings-variant"></i><span class="hide-menu">Accounts</span></a>
                     <ul aria-expanded="false" class="collapse  first-level">
                         <li class="sidebar-item">
@@ -101,27 +101,27 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
 
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-settings-variant"></i><span class="hide-menu">Inventory</span></a>
                     <ul aria-expanded="false" class="collapse  first-level">
                         <li class="sidebar-item">
-                            <a asp-controller="Employee" asp-action="Index" class="sidebar-link">
+                            <a asp-controller="Transection" asp-action="stocks" class="sidebar-link">
                                 <i class="mdi mdi-account-multiple"></i>
                                 <span class="hide-menu"> Stocks</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
-                            <a asp-controller="UserRole" asp-action="Index" class="sidebar-link">
+                            <a asp-controller="Transection" asp-action="reports" class="sidebar-link">
                                 <i class="mdi mdi-account-key"></i>
                                 <span class="hide-menu"> Reports </span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
-                            <a asp-controller="UserRole" asp-action="Index" class="sidebar-link">
+                            <a asp-controller="Transection" asp-action="LowInventory" class="sidebar-link">
                                 <i class="mdi mdi-account-key"></i>
                                 <span class="hide-menu"> Low Inventory </span>
                             </a>

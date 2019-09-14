@@ -105,50 +105,49 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group row">
-                        <label class="col-md-4" for="disabledTextInput" style="margin-top: 8px;">Total Quantity</label>
+                        <label class="col-md-4" style="margin-top: 8px;">Total Quantity</label>
                         <div class="col-md-8">
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="0.00" disabled="">
+                            <input v-model="totalQuantity" type="text" id="disabledTextInput" class="form-control" placeholder="0.00" disabled="">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-4" for="disabledTextInput" style="margin-top: 8px;">Total Price</label>
+                        <label class="col-md-4" style="margin-top: 8px;">Total Price</label>
                         <div class="col-md-8">
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="0.00" disabled="">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group row">
-                        <label class="col-md-4" for="disabledTextInput" style="margin-top: 8px;">Discount</label>
-                        <div class="col-md-8">
-                            <input type="number" id="disabledTextInput" class="form-control" placeholder="0.00" >
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-4" for="disabledTextInput" style="margin-top: 8px;">Payable</label>
-                        <div class="col-md-8">
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="0.00" disabled="">
+                            <input v-model="totalPrice" type="text" id="disabledTextInput" class="form-control" placeholder="0.00" disabled="">
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group row">
-                        <label class="col-md-4" for="disabledTextInput" style="margin-top: 8px;">Paid</label>
+                        <label class="col-md-4" style="margin-top: 8px;">Discount</label>
                         <div class="col-md-8">
-                            <input type="number" id="disabledTextInput" class="form-control" placeholder="0.00" >
+                            <input v-model="discount" type="number" id="disabledTextInput" class="form-control" placeholder="0.00" >
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-4" for="disabledTextInput" style="margin-top: 8px;">Change Amount</label>
+                        <label class="col-md-4" style="margin-top: 8px;">Payable</label>
                         <div class="col-md-8">
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="0.00" disabled="">
+                            <input v-model="payable" type="text" id="disabledTextInput" class="form-control" placeholder="0.00" disabled="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group row">
+                        <label class="col-md-4" style="margin-top: 8px;">Paid</label>
+                        <div class="col-md-8">
+                            <input type="number" v-model="paidAmount" id="disabledTextInput" class="form-control" placeholder="0.00" >
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" style="margin-top: 8px;">Change Amount</label>
+                        <div class="col-md-8">
+                            <input v-model="changeAmount" type="text" id="disabledTextInput" class="form-control" placeholder="0.00" disabled="">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
     <div class="card">
         <div class="card-header">
             <h4>Billing Information</h4>
@@ -158,32 +157,40 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label asp-for="ReferenceInternal" class="control-label"></label>
-                        <input asp-for="ReferenceInternal" class="form-control" />
-                        <span asp-validation-for="ReferenceInternal" class="text-danger"></span>
+                        <label class="control-label">Customer</label>
+                        <select  class="select2 form-control custom-select" style="width: 100%;" id="customerId">
+                            <option selected disabled value="">Select Customer</option>
+                             @foreach (var customer in ViewBag.Customers)
+                            {
+                                <option value="@customer.Id">@customer.FullName</option>
+                                
+                            }
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label asp-for="ReferenceExternal" class="control-label"></label>
-                        <input asp-for="ReferenceExternal" class="form-control" />
-                        <span asp-validation-for="ReferenceExternal" class="text-danger"></span>
+                        <label asp-for="ReferenceInternal" class="control-label"></label>
+                        <input v-model="internalMemo" asp-for="ReferenceInternal" class="form-control" />
+                        <span asp-validation-for="ReferenceInternal" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-sm-4">
-                     <div class="form-group">
-                        <label asp-for="SaleDate" class="control-label"></label>
-                        <input asp-for="SaleDate" class="form-control" />
-                        <span asp-validation-for="SaleDate" class="text-danger"></span>
+                    <div class="form-group">
+                        <label class="control-label">Sale Date</label>
+                        <input class="form-control mydatepicker" placeholder="mm/dd/yyyy"/>
+                        <span  class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="PostingDate" class="control-label"></label>
-                        <input asp-for="PostingDate" class="form-control" />
-                        <span asp-validation-for="PostingDate" class="text-danger"></span>
+                        <label asp-for="ReferenceExternal" class="control-label"></label>
+                        <input v-model="externalMemo" asp-for="ReferenceExternal" class="form-control" id="saleDate"/>
+                        <span asp-validation-for="ReferenceExternal" class="text-danger"></span>
                     </div>
+
+                    
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label  class="control-label">Sale Note</label>
-                        <textarea  class="form-control" rows="5"></textarea>
+                        <textarea v-model="saleNote"  class="form-control" rows="5"></textarea>
                         <span  class="text-danger"></span>
                     </div>
                 </div>
@@ -197,7 +204,7 @@
                 
                 <div class="col">
                     <div class="card-action">
-                        <button type="button" v-on:click="saveProductPurchase" class="btn btn-primary float-right">Submit</button>
+                        <button type="button" v-on:click="saveProductSales" class="btn btn-primary float-right">Sale</button>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -205,7 +212,6 @@
         </div>
     </div>
 </div>
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -18,12 +18,4 @@ namespace PosSustemUIU.ViewModels
         public bool IsActive { get; set; }
         public string OtherNote { get; set; }
     }
-
-    public class SelectedProducts
-    {
-        public string ProductId { get; set; }
-        public string Price { get; set; }
-        public string Quantity { get; set; }
-        public string ExpireDate { get; set; }
-    }
 }

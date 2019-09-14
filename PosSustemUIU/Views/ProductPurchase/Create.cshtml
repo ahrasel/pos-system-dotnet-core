@@ -19,12 +19,12 @@
                             <div class="form-group">
                                 <label asp-for="SupplierId" class="control-label" style="margin-bottom: 0px;"></label>
                                 <select asp-for="SupplierId" class="select2 form-control custom-select" id="supplierId" style="width: 100%;">
-                                            <option selected disabled>Select Area</option>
-                                            @foreach (var supplier in ViewBag.Suppliers)
-                                            {
-                                                <option value="@supplier.Id">@supplier.Name</option>
-                                                
-                                            }
+                                    <option selected disabled>Select Area</option>
+                                    @foreach (var supplier in ViewBag.Suppliers)
+                                    {
+                                        <option value="@supplier.Id">@supplier.Name</option>
+                                        
+                                    }
                                         </select>
                                 <span asp-validation-for="SupplierId" class="text-danger"></span>
                             </div>

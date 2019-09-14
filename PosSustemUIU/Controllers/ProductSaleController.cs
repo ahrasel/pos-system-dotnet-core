@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PosSustemUIU.Data;
 using PosSustemUIU.Models;
+using PosSustemUIU.ViewModels;
 
 namespace PosSustemUIU.Controllers
 {
-    public class ProductSaleController : Controller
+    public class ProductSaleController : BaseCotroller
     {
         private readonly ApplicationDbContext _context;
 
@@ -60,7 +61,7 @@ namespace PosSustemUIU.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ReferenceInternal,ReferenceExternal,SaleDate,PostingDate,TotalPrice,TotalVat,TotalDiscount,TotalQuantity,Note,PaymentNote,IsVatPaid,ReceivingCost,IsActive,Meta,CustomerMeta,IsDeleted,CreatedBy,UpdatedBy,DeletedBy,CreatedAt,DeletedAt,CustomerId,TransectionTypeOId")] ProductSale productSale)
+        public async Task<IActionResult> Create(ProductSale productSale)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +97,7 @@ namespace PosSustemUIU.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,ReferenceInternal,ReferenceExternal,SaleDate,PostingDate,TotalPrice,TotalVat,TotalDiscount,TotalQuantity,Note,PaymentNote,IsVatPaid,ReceivingCost,IsActive,Meta,CustomerMeta,IsDeleted,CreatedBy,UpdatedBy,DeletedBy,CreatedAt,DeletedAt,CustomerId,TransectionTypeOId")] ProductSale productSale)
+        public async Task<IActionResult> Edit(string id, ProductSale productSale)
         {
             if (id != productSale.Id)
             {
@@ -162,6 +163,67 @@ namespace PosSustemUIU.Controllers
         private bool ProductSaleExists(string id)
         {
             return _context.ProductSales.Any(e => e.Id == id);
+        }
+
+        [HttpPost("ajax-save-product-sale")]
+        public async Task<JsonResult> SaveProductsAsync([FromBody]SalePostVM salePostVM)
+        {
+
+            var transectionTypeId = "9d87f732-8a45-478b-a725-1d566974f947";
+            var productSale = new ProductSale
+            {
+                CustomerId = salePostVM.CustomerId,
+                SaleDate = Convert.ToDateTime(salePostVM.SaleDate),
+                ReferenceInternal = salePostVM.InternalMemo,
+                ReferenceExternal = salePostVM.ExternalMemo,
+                Note = salePostVM.SaleNote,
+                ReceivingCost = double.Parse(salePostVM.PaidAmount),
+                TotalPrice = double.Parse(salePostVM.TotalPrice),
+                TotalDiscount = double.Parse(salePostVM.Discount),
+                TotalVat = 0, //TODO:: Change total vat dynamically
+                TotalQuantity = int.Parse(salePostVM.TotalQuantity),
+                IsVatPaid = salePostVM.IsVatPaid,
+                IsActive = salePostVM.IsActive,
+                CreatedBy = GteUserId(),
+                TransectionTypeOId = transectionTypeId,
+            };
+
+            _context.Add(productSale);
+
+            //save products info
+            foreach (var product in salePostVM.SelectedProducts)
+            {
+                //update purchase product quantity
+                _context.Add(new Transection
+                {
+                    ParentId = productSale.Id,
+                    ProductId = product.ProductId,
+                    Price = double.Parse(product.Price),
+                    Quantity = int.Parse(product.Quantity),
+                    RemainingQuantity = int.Parse(product.Quantity),
+                    ExpireDate = Convert.ToDateTime(product.ExpireDate),
+                    CreatedBy = GteUserId(),
+                    TransectionTypeId = transectionTypeId
+                });
+            }
+            var res = await _context.SaveChangesAsync();
+
+            return new JsonResult(productSale);
+        }
+
+        public override Task<IActionResult> ChangeActiveStatus(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task<IActionResult> SoftDelete(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task<IActionResult> Restore(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -17,12 +17,14 @@ var purchsePage = new Vue({
         internalMemo: null,
         externalMemo: null,
         paidAmount: null,
-        purchaseNote: null,
-        purchaseNote: null,
-        deliveryNote: null,
-        otherNote: null,
+        saleNote: null,
         totalPrice:0,
-        totalQuantity: 0
+        totalQuantity: 0,
+        discount: 0,
+        payable: 0,
+        changeAmount: 0,
+        customerId: null,
+        saleDate: null,
     },
     methods: {
         addProductToList() {
@@ -95,30 +97,29 @@ var purchsePage = new Vue({
                 });
 
         },
-        saveProductPurchase(){
+        saveProductSales(){
             let self = this;
             //check form validation
-            if (this.isPurchaseFormValid) {
+            if (this.isSaleFormValid) {
                 //make data object
-                let purchaseData = {
-                    supplierId: $("#supplierId").select2('val'),
+                let saleData = {
+                    selectedProducts: self.selectedProducts,
+                    totalQuantity: self.totalQuantity,
+                    totalPrice: self.totalPrice,
                     paidAmount: self.paidAmount,
-                    purchaseDate: $("#purchaseDate").val(),
+                    discount: self.discount,
+                    customerId: $("#customerId").select2('val'),
+                    saleData: $("#saleData").val(),
                     internalMemo: self.internalMemo,
                     externalMemo: self.externalMemo,
-                    purchaseNote: self.purchaseNote,
-                    deliveryNote: self.deliveryNote,
-                    otherNote: self.otherNote,
-                    selectedProducts: self.selectedProducts,
-                    totalPrice: self.totalPrice,
-                    totalQuantity: self.totalQuantity
-
+                    saleNote: self.saleNote,
                 }
                 //send save request
-                axios.post('/ajax-save-product-purchase', purchaseData)
+                axios.post('/ajax-save-product-sale', saleData)
                     .then(function (response) {
                         if (response.status === 200) {
-                            $('#purchaseForm').submit();
+                            // $('#purchaseForm').submit();
+                            window.location.replace('/ProductSale');
                         }
                         else{
                             alert('Something wrong!!!!');
@@ -130,7 +131,7 @@ var purchsePage = new Vue({
                     });
             }
         },
-        isPurchaseFormValid(){
+        isSaleFormValid(){
             return true;
         },
         removeSelectedProduct(product, index){

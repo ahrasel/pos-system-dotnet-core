@@ -37,7 +37,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                        
+                        @foreach (var productSale in Model)
+                        {
+                            count ++;
+                            <tr>
+                                <td class="text-center">@count</td>
+                                <td class="text-center">@productSale.Customer.FullName</td>
+                                <td class="text-center">@productSale.TotalQuantity</td>
+                                <td class="text-center">@productSale.TotalPrice</td>
+                                <td class="text-center">@productSale.ReceivingCost</td>
+                                <td class="text-center">0</td>
+                                <td class="text-center">@productSale.TotalVat</td>
+                                <td class="text-center">@productSale.SaleDate</td>
+                                <td class="text-center">
+                                     <a  title="Show" asp-action="Details" asp-route-id="@productSale.Id" class="btn btn-cyan btn-sm text-white"><i class="fas fa-eye" aria-hidden="true"></i></a>
+                                </td> 
+                            </tr>   
+                        }
                 </tbody>
                 
                 <tfoot>

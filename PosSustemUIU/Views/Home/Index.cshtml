@@ -50,119 +50,21 @@
                             <small class="font-light">Online Orders</small>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title m-b-0">Todays Trsection</h5>
-                            </div>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Browser</th>
-                                        <th scope="col">Visits</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Chrome</td>
-                                        <td>8850</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Firefox</td>
-                                        <td>1200</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Internet Explorer</td>
-                                        <td>1540</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Opera</td>
-                                        <td>1230</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Safari</td>
-                                        <td>1590</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title m-b-0">Product Expired Soon</h5>
-                            </div>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Site</th>
-                                        <th scope="col">Visits</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><a href="#" class="link">Themeforest.com</a></td>
-                                        <td>1240</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#" class="link">Themedesigner.in</a></td>
-                                        <td>1200</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#" class="link">Themedesigner.in</a></td>
-                                        <td>1542</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#" class="link">Themedesigner.in</a></td>
-                                        <td>1230</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#" class="link">Themedesigner.in</a></td>
-                                        <td>1542</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title m-b-0">Low Inventory</h5>
-                            </div>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Page</th>
-                                        <th scope="col">Visits</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><a href="#" class="link">Freebies</a></td>
-                                        <td>1240</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#" class="link">Blog</a></td>
-                                        <td>1200</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#" class="link">Work</a></td>
-                                        <td>1542</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#" class="link">Site Template</a></td>
-                                        <td>1230</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#" class="link">All categories</a></td>
-                                        <td>1542</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+         @await Component.InvokeAsync("HomeTodaysTransections")              
+    </div>
+
+    <div class="col-md-4">
+         @await Component.InvokeAsync("HomeExpiredSoon")       
+    </div>
+
+    <div class="col-md-4">
+         @await Component.InvokeAsync("HomeLowInventory")
     </div>
 </div>

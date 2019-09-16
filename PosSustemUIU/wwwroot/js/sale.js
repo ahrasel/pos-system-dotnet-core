@@ -55,7 +55,7 @@ var purchsePage = new Vue({
             let self = this;
             let isvalid = false;
             self.clearError();
-            self.product = $("#product").select2('val');
+            // self.product = $("#product").select2('val');
             self.productName = $("#product").select2('data')[0].text;
             self.expireDate = $("#expireDate").val();
             if (self.product == null) { self.productError = true; isvalid = false; }
@@ -83,9 +83,10 @@ var purchsePage = new Vue({
         },
         loadProducts() {
             let self = this;
-            axios.get('/ajax-products')
+            axios.get('/ajax-sale-products')
                 .then(function (response) {
                     // handle success
+                    console.log(response.data);
                     self.products = response.data;
                 })
                 .catch(function (error) {
@@ -148,6 +149,17 @@ var purchsePage = new Vue({
         $('.mydatepicker').datepicker({
             autoclose: true,
             todayHighlight: true
+        });
+
+        $('#product').on("select2:closing", function (e) {
+            // what you would like to happen
+            console.log(e);
+            let index = $("#product").select2('val');
+            let selectedProduct = self.products[index];
+            self.product = selectedProduct.id;
+            self.price = selectedProduct.price;
+            $("#expireDate").val(selectedProduct.expireDate);
+            self.remainingQuantity = selectedProduct.remainingQuantity;
         });
     }
 })

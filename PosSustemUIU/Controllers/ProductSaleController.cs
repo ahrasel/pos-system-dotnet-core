@@ -211,6 +211,19 @@ namespace PosSustemUIU.Controllers
             return new JsonResult(productSale);
         }
 
+        [HttpGet("ajax-sale-products")]
+        public async Task<JsonResult> GetProductById()
+        {
+            var transectionTypeId = "bda54eb3-c4ea-4a52-a488-9fdaf2bb6e8d";
+
+            var transection = await _context.Transections.Where(t => t.TransectionTypeId == transectionTypeId && t.RemainingQuantity > 0).Include("Product").Select(prod => 
+                new {TransectionId = prod.Id, prod.Product.Id, prod.Product.Name, prod.Price, prod.RemainingQuantity, prod.ExpireDate}
+            ).ToListAsync();
+
+            // var products = await _context.Products.ToListAsync();
+            return new JsonResult(transection);
+        }
+
         public override Task<IActionResult> ChangeActiveStatus(string id)
         {
             throw new NotImplementedException();
@@ -227,3 +240,4 @@ namespace PosSustemUIU.Controllers
         }
     }
 }
+

@@ -23,7 +23,7 @@ namespace PosSustemUIU.Controllers
         // GET: ProductPurchase
         public async Task<IActionResult> Index()
         {
-            var productPurchases = _context.ProductPurchases.Include(p => p.Supplier).Include(p => p.TransectionType);
+            var productPurchases = _context.ProductPurchases.Include(p => p.Supplier).Include(p => p.TransectionType).OrderByDescending(p =>p.PurchaseDate);
             return View(await productPurchases.ToListAsync());
         }
 

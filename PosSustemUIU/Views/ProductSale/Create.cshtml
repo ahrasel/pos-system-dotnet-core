@@ -27,7 +27,7 @@
                                         <select  class="select2 form-control custom-select" style="width: 100%;" id="product">
                                             <option selected disabled value="">Select Product</option>
                                                 <template v-for="(product, index) in products">
-                                                    <option :value="product.id">{{ product.name }}</option>
+                                                    <option :value="index">{{ product.name }} - {{ product.price }}</option>
                                             </template>
                                         </select>
                                         <span v-if="productError" class="text-danger">Select Product</span>
@@ -41,7 +41,7 @@
                                         <span v-if="quantityError" class="text-danger">Set Product Quantity</span>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control mydatepicker" id="expireDate" placeholder="mm/dd/yyyy">
+                                        <input readonly type="text" class="form-control mydatepicker" id="expireDate" placeholder="mm/dd/yyyy">
                                         <span v-if="expireDateError" class="text-danger">Set Product Expired Date</span>
 
                                     </td>

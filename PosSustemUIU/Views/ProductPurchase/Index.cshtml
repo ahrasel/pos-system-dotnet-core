@@ -43,7 +43,7 @@
                                 <td class="text-center">@productPurchase.TotalQuantity</td>
                                 <td class="text-center">@productPurchase.TotalPrice</td>
                                 <td class="text-center">@productPurchase.ReceivingCost</td>
-                                <td class="text-center">0</td>
+                                <td class="text-center">@(productPurchase.TotalPrice - productPurchase.ReceivingCost )</td>
                                 <td class="text-center">@productPurchase.TotalVat</td>
                                 <td class="text-center">@productPurchase.PurchaseDate</td>
                                 <td class="text-center">

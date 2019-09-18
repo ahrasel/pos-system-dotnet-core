@@ -58,6 +58,18 @@
                                                 }
                                             </td>
                                         }
+                                        else if(key == "Image" && Model.ImageDir != null){
+                                            <td class="text-center">
+                                                @if (data.Image != null)
+                                                {
+                                                    <img src="~/uploads/@Model.ImageDir/@data.Image" alt="" srcset="" style="max-width: 50px">
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/uploads/no_image.png" alt="" srcset="" style="max-width: 50px">
+                                                }
+                                            </td>
+                                        }
                                         else
                                         {
                                             <td class="text-center">@ViewHelpers.GetPropertyValue(data, key)</td>
@@ -67,39 +79,12 @@
                                 @if (Model.Actions != null && Model.Actions.Any())
                                 {
                                     <td class="text-center">
-                                        @if (Model.Actions.Contains(TableActions.Show))
-                                        {
-                                            <a  title="Show" asp-controller="@Model.Controller" asp-action="Details" asp-route-id="@data.Id" class="btn btn-cyan btn-sm text-white"><i class="fas fa-eye" aria-hidden="true"></i></a>
-                                        }
-                                        @if (Model.Actions.Contains(TableActions.Edit))
-                                        {
-                                            if (!data.IsDeleted)
-                                            {
-                                                <a title="Edit" asp-controller="@Model.Controller" asp-action="Edit" asp-route-id="@data.Id" class="btn btn-success btn-sm text-white"><i class="far fa-edit" aria-hidden="true"></i></a>
-                                            }
-                                        }
-                                        @if (Model.Actions.Contains(TableActions.Delete))
-                                        {
-                                            if (Model.Actions.Contains(TableActions.SoftDelete) && @data.IsDeleted)
-                                            {
-                                                <form style="display: inline;" method="POST" asp-controller="@Model.Controller" asp-action="Restore" role="form">
-                                                    <input type="hidden" name="Id" value="@data.Id" />
-                                                    <button title="Restore" type="submit" class="btn btn-danger btn-sm"><i class="far fas fa-recycle" aria-hidden="true"></i></button>
-                                                </form>
-                                                <form style="display: inline;" method="POST" asp-controller="@Model.Controller" asp-action="Delete" role="form">
-                                                    <input type="hidden" name="Id" value="@data.Id" />
-                                                    <button title="Delete Permanently" type="submit" class="btn btn-danger btn-sm"><i class="far fa-trash-alt" aria-hidden="true"></i></button>
-                                                </form>
-                                            }
-                                            else{
-                                                <form style="display: inline;" method="POST" asp-controller="@Model.Controller" asp-action="@( Model.Actions.Contains(TableActions.SoftDelete) ? "SoftDelete" : "Delete")" role="form">
-                                                    <input type="hidden" name="Id" value="@data.Id" />
-                                                    <button title="Delete" type="submit" class="btn btn-danger btn-sm"><i class="far fa-trash-alt" aria-hidden="true"></i></button>
-                                                </form>
-                                            }
-                                            
-                                        }
-                                        
+                                        <partial name="Table/Actionbuttons" model='new TableActionsVM{
+                                            Actions = Model.Actions,
+                                            TableData = data,
+                                            Controller = Model.Controller,
+
+                                        }'/>
                                     </td>
                                 }
                             </tr>

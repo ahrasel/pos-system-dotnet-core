@@ -8,6 +8,7 @@ namespace PosSustemUIU.ComponentsModel
     {
         public string Url { get; set; }
         public string Heading { get; set; }
+        public string ImageDir { get; set; }
         public string Controller { get; set; }
         public bool ShowStatus { get; set; }
         public bool CreateButton { get; set; }

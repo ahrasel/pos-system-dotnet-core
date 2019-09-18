@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -12,6 +13,7 @@ using PosSustemUIU.Models;
 
 namespace PosSustemUIU.Controllers
 {
+    [Authorize]
     public abstract class BaseCotroller : Controller
     {
         [HttpGet]

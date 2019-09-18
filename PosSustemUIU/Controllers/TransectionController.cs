@@ -11,7 +11,7 @@ using PosSustemUIU.Models.BLL;
 
 namespace PosSustemUIU.Controllers
 {
-    public class TransectionController : Controller
+    public class TransectionController : BaseCotroller
     {
         private readonly ApplicationDbContext _context;
         private  TransectionManager _manager;
@@ -178,6 +178,21 @@ namespace PosSustemUIU.Controllers
         private bool TransectionExists(string id)
         {
             return _context.Transections.Any(e => e.Id == id);
+        }
+
+        public override Task<IActionResult> ChangeActiveStatus(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task<IActionResult> SoftDelete(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task<IActionResult> Restore(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

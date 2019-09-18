@@ -28,8 +28,9 @@ namespace PosSustemUIU.Controllers
         }
         
         // GET: {Controller}
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            ViewBag.Roles = await _roleManager.Roles.ToListAsync();
             return View( _userManager.Users);
         }
         

@@ -13,7 +13,6 @@ using PosSustemUIU.Models;
 
 namespace PosSustemUIU.Controllers
 {
-    [Authorize]
     public abstract class BaseCotroller : Controller
     {
         [HttpGet]

@@ -18,6 +18,7 @@ namespace PosSustemUIU.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IHostingEnvironment _environment;
+        private readonly string _roleName = "Employee";
          
         
         public EmployeeController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IHostingEnvironment environment):base()
@@ -88,7 +89,8 @@ namespace PosSustemUIU.Controllers
                 Description = employee.Description,
                 IsActive = employee.IsActive
             };
-           var res = await _userManager.CreateAsync(user, employee.Password);
+            var res = await _userManager.CreateAsync(user, employee.Password);
+            var roleRes = await _userManager.AddToRoleAsync(user, _roleName);
             return RedirectToAction(nameof(Index));
         }
         

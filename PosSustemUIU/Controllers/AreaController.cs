@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using PosSustemUIU.Models;
 
 namespace PosSustemUIU.Controllers
 {
+    // [Authorize(Roles = "Administrator")]
     public class AreaController : BaseCotroller
     {
         private readonly ApplicationDbContext _context;

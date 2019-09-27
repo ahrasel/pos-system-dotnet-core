@@ -43,7 +43,7 @@ var purchsePage = new Vue({
                 self.totalQuantity =0;
 
                 self.selectedProducts.map(function (product) {
-                    console.log(parseInt(product.price) * parseInt(product.quantity));
+                    // console.log(parseInt(product.price) * parseInt(product.quantity));
                     self.totalPrice += parseInt(product.price) * parseInt(product.quantity);
                     self.totalQuantity += parseInt(product.quantity);
                 });

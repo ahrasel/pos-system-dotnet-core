@@ -121,7 +121,7 @@
                     <div class="form-group row">
                         <label class="col-md-4" style="margin-top: 8px;">Discount</label>
                         <div class="col-md-8">
-                            <input v-model="discount" type="number" id="disabledTextInput" class="form-control" placeholder="0.00" >
+                            <input v-model="discount" v-on:change='onChangeInputField("discount")' type="number" id="disabledTextInput" class="form-control" placeholder="0.00" >
                         </div>
                     </div>
                     <div class="form-group row">

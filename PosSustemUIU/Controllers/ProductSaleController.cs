@@ -195,7 +195,9 @@ namespace PosSustemUIU.Controllers
             //save products info
             foreach (var product in salePostVM.SelectedProducts)
             {
-                //update purchase product quantity
+                var tranProd = await _context.Transections.Where(t => t.Id == product.ProductPurchaseId).FirstAsync();
+                tranProd.RemainingQuantity = tranProd.RemainingQuantity - int.Parse(product.Quantity);
+                _context.Update(tranProd);
                 _context.Add(new Transection
                 {
                     ParentId = productSale.Id,

@@ -25,19 +25,22 @@ var purchsePage = new Vue({
         changeAmount: 0,
         customerId: null,
         saleDate: null,
+        productPurchaseId: null,
     },
     methods: {
         addProductToList() {
             let self = this;
             if (self.isValid()) {
                 //add product to list
+                console.log(self.product);
                 self.selectedProducts.push(
                     { 
                         productId: self.product,
                         productName: self.productName,
                         price: self.price,
                         quantity: self.quantity,
-                        expireDate:self.expireDate
+                        expireDate:self.expireDate,
+                        productPurchaseId: self.productPurchaseId,
                     }
                 );
                 //update total price and quantity
@@ -45,7 +48,7 @@ var purchsePage = new Vue({
                 self.totalQuantity =0;
 
                 self.selectedProducts.map(function (product) {
-                    self.totalPrice += parseInt(product.price);
+                    self.totalPrice += parseInt(product.price) * parseInt(product.quantity);
                     self.totalQuantity += parseInt(product.quantity);
                 });
                 self.clearField();
@@ -59,6 +62,7 @@ var purchsePage = new Vue({
             self.productName = $("#product").select2('data')[0].text;
             self.expireDate = $("#expireDate").val();
             if (self.product == null) { self.productError = true; isvalid = false; }
+            // if (self.paidAmount == null) { alert('Paid Amount Can not empty' ); isvalid = false; }
             else if (self.price == null) { self.priceError = true; isvalid = false; }
             else if (self.quantity == null) { self.quantityError = true; isvalid = false; }
             else if (self.expireDate == null || self.expireDate == '') { self.expireDateError = true; isvalid = false; }
@@ -86,7 +90,7 @@ var purchsePage = new Vue({
             axios.get('/ajax-sale-products')
                 .then(function (response) {
                     // handle success
-                    console.log(response.data);
+                    // console.log(response.data);
                     self.products = response.data;
                 })
                 .catch(function (error) {
@@ -140,6 +144,17 @@ var purchsePage = new Vue({
             //remove product
             self.selectedProducts.splice(index, 1)
             //update total price and quantity
+        },
+        onChangeInputField(field){
+            let self = this;
+            switch (field) {
+                case field === "discount":
+                    self.payable = self.totalPrice - self.discount;
+                    break;
+            
+                default:
+                    break;
+            }
         }
     },
     mounted() {
@@ -153,11 +168,13 @@ var purchsePage = new Vue({
 
         $('#product').on("select2:closing", function (e) {
             // what you would like to happen
-            console.log(e);
             let index = $("#product").select2('val');
             let selectedProduct = self.products[index];
+            // console.log(selectedProduct);
             self.product = selectedProduct.id;
             self.price = selectedProduct.price;
+            self.productPurchaseId = selectedProduct.transectionId;
+            self.quantity = selectedProduct.remainingQuantity;
             $("#expireDate").val(selectedProduct.expireDate);
             self.remainingQuantity = selectedProduct.remainingQuantity;
         });

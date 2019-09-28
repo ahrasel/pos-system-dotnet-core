@@ -124,7 +124,7 @@ var purchsePage = new Vue({
                     .then(function (response) {
                         if (response.status === 200) {
                             // $('#purchaseForm').submit();
-                            window.location.replace('/ProductSale');
+                            window.location.replace('/ProductSale/Details/' + response.data.id);
                         }
                         else{
                             alert('Something wrong!!!!');

@@ -45,7 +45,7 @@ namespace PosSustemUIU.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.Transections = await _context.Transections.Where(t => t.ParentId == productSale.Id).Include(t => t.Product).Include(t => t.TransectionType).ToListAsync();
             return View(productSale);
         }
 

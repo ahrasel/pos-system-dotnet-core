@@ -120,7 +120,8 @@ var purchsePage = new Vue({
                 axios.post('/ajax-save-product-purchase', purchaseData)
                     .then(function (response) {
                         if (response.status === 200) {
-                            $('#purchaseForm').submit();
+                            // $('#purchaseForm').submit();
+                            window.location.replace('/ProductPurchase/Details/' + response.data.id);
                         }
                         else{
                             alert('Something wrong!!!!');

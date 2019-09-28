@@ -114,7 +114,7 @@ var purchsePage = new Vue({
                     paidAmount: self.paidAmount,
                     discount: self.discount,
                     customerId: $("#customerId").select2('val'),
-                    saleData: $("#saleData").val(),
+                    saleData: $("#saleDate").val(),
                     internalMemo: self.internalMemo,
                     externalMemo: self.externalMemo,
                     saleNote: self.saleNote,

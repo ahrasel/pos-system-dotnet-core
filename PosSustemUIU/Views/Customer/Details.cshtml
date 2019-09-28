@@ -2,101 +2,67 @@
 
 @{
     ViewData["Title"] = "Details";
+    int count = 0;
+
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Customer</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.OtherContact)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.OtherContact)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Image)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Meta)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Meta)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IsDeleted)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CreatedBy)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdatedBy)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.UpdatedBy)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DeletedBy)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DeletedBy)
-        </dd>
-    </dl>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-body printableArea">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h3 class="pull-left">
+                        <address>
+                            <h3> &nbsp;<b class="text-danger">@Model.FullName</b></h3>
+                            <p class="text-muted m-l-5">Email: @Model.Email
+                                <br/> Contact number: @Model.PhoneNumber
+                                <br/> Area: @Model.Area.Name
+                                <br/> Address: @Model.Address</p>
+                        </address>
+                    </div>
+                <div class="col-sm-4">
+                    @if (@Model.Image != null)
+                    {
+                        <img style="max-width: 150px; float: right" src="~/uploads/customers/@Model.Image" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">
+                        
+                    }
+                    else{
+                        <img style="max-width: 150px; float: right" src="~/uploads/no_image.png" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">
+                    }
+                </div>
+                <div class="col-md-12">
+                    <div class="table-responsive m-t-40" style="clear: both;">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">SN#</th>
+                                    <th class="text-right">Transection Type</th>
+                                    <th class="text-right">Quantity</th>
+                                    <th class="text-right">Price</th>
+                                    <th class="text-right">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var transection in ViewBag.Transections)
+                                {
+                                    count++;
+                                    <tr>
+                                        <td class="text-center">@count</td>
+                                        <td class="text-right">@transection.TransectionType.Name</td>
+                                        <td class="text-right">@transection.TotalQuantity</td>
+                                        <td class="text-right">@transection.TotalPrice</td>
+                                        <td class="text-right">@transection.CreatedAt</td>
+                                    </tr>
+                                }
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

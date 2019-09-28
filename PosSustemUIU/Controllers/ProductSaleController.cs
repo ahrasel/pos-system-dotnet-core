@@ -187,6 +187,7 @@ namespace PosSustemUIU.Controllers
                 IsVatPaid = salePostVM.IsVatPaid,
                 IsActive = salePostVM.IsActive,
                 CreatedBy = GteUserId(),
+                CreatedAt = DateTime.Now,
                 TransectionTypeOId = transectionTypeId,
             };
 

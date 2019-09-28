@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -18,6 +19,7 @@ namespace PosSustemUIU.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IHostingEnvironment _environment;
+        private readonly ApplicationDbContext _context;
         private readonly string _roleName = "Employee";
          
         
@@ -26,6 +28,7 @@ namespace PosSustemUIU.Controllers
             this._userManager = userManager;
             this._roleManager = roleManager;
             this._environment = environment;
+            this._context = context;
         }
         
         // GET: {Controller}
@@ -48,7 +51,8 @@ namespace PosSustemUIU.Controllers
             {
                 return NotFound();
             }
-        
+            ViewBag.Transections = await _context.Transections.Where(t => t.CreatedBy == user.Id).Include(t => t.Product).Include(t => t.TransectionType).ToListAsync();
+
             return View(user);
         }
         

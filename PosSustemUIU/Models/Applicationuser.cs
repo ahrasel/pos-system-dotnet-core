@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
 namespace PosSustemUIU.Models
@@ -8,6 +9,8 @@ namespace PosSustemUIU.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        [NotMapped]
+        public string FullName => $"{FirstName} {LastName}";
         public string OtherContact { get; set; }
         public DateTime DateOfBirth { get; set; }
         public DateTime Start { get; set; }

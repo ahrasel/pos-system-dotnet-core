@@ -31,12 +31,12 @@ namespace PosSustemUIU.Controllers {
                 return NotFound ();
             }
 
-            var customer = await _context.Customers
+            var customer = await _context.Customers.Include(c => c.Area)
                 .FirstOrDefaultAsync (m => m.Id == id);
             if (customer == null) {
                 return NotFound ();
             }
-
+            ViewBag.Transections = await _context.ProductSales.Where(c => c.CustomerId == customer.Id).Include(t => t.TransectionType).ToListAsync();
             return View (customer);
         }
 

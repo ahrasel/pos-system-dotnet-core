@@ -1,1 +1,66 @@
-﻿
+﻿@model ApplicationUser
+@{
+    ViewData["Title"] = "Employees";
+    int count = 0;
+
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-body printableArea">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h3 class="pull-left">
+                        <address>
+                            <h3> &nbsp;<b class="text-danger">@Model.FullName</b></h3>
+                            <p class="text-muted m-l-5">Email: @Model.Email
+                                <br/> Contact number: @Model.PhoneNumber
+                                <br/> DOB: @Model.DateOfBirth
+                                <br/> Address: @Model.Address</p>
+                        </address>
+                    </div>
+                <div class="col-sm-4">
+                    @if (@Model.Image != null)
+                    {
+                        <img style="max-width: 150px; float: right" src="~/uploads/users/@Model.Image" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">
+                        
+                    }
+                    else{
+                        <img style="max-width: 150px; float: right" src="~/uploads/no_image.png" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">
+                    }
+                </div>
+                <div class="col-md-12">
+                    <div class="table-responsive m-t-40" style="clear: both;">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">SN#</th>
+                                    <th class="text-right">Product</th>
+                                    <th class="text-right">Transection Type</th>
+                                    <th class="text-right">Quantity</th>
+                                    <th class="text-right">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var transection in ViewBag.Transections)
+                                {
+                                    count++;
+                                    <tr>
+                                        <td class="text-center">@count</td>
+                                        <td class="text-right">@transection.Product.Name</td>
+                                        <td class="text-right">@transection.TransectionType.Name</td>
+                                        <td class="text-right">@transection.Quantity</td>
+                                        <td class="text-right">@transection.CreatedAt</td>
+                                    </tr>
+                                }
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a>
+    <a asp-action="Index">Back to List</a>
+</a>

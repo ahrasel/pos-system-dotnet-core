@@ -114,18 +114,67 @@
                         </li>
 
                         <li class="sidebar-item">
-                            <a asp-controller="Transection" asp-action="reports" class="sidebar-link">
-                                <i class="mdi mdi-account-key"></i>
-                                <span class="hide-menu"> Reports </span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item">
                             <a asp-controller="Transection" asp-action="LowInventory" class="sidebar-link">
                                 <i class="mdi mdi-account-key"></i>
                                 <span class="hide-menu"> Low Inventory </span>
                             </a>
                         </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-settings-variant"></i><span class="hide-menu">Inventory Reports</span></a>
+                    <ul aria-expanded="false" class="collapse  first-level">
+                        
+                        <li class="sidebar-item">
+                            <a asp-controller="Report" asp-action="ProductReport" class="sidebar-link">
+                                <i class="mdi mdi-account-key"></i>
+                                <span class="hide-menu"> Product Reports </span>
+                            </a>
+                        </li>
+
+                        <!-- <li class="sidebar-item">
+                            <a asp-controller="Report" asp-action="ProductCategoriesReport" class="sidebar-link">
+                                <i class="mdi mdi-account-key"></i>
+                                <span class="hide-menu"> Product Categories Reports </span>
+                            </a>
+                        </li> -->
+
+                        <li class="sidebar-item">
+                            <a asp-controller="Report" asp-action="SaleReport" class="sidebar-link">
+                                <i class="mdi mdi-account-key"></i>
+                                <span class="hide-menu"> Sale Reports </span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a asp-controller="Report" asp-action="PurchaseReport" class="sidebar-link">
+                                <i class="mdi mdi-account-key"></i>
+                                <span class="hide-menu"> Purchase Reports </span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a asp-controller="Report" asp-action="CustomerReport" class="sidebar-link">
+                                <i class="mdi mdi-account-key"></i>
+                                <span class="hide-menu"> Customer Reports </span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a asp-controller="Report" asp-action="SupplierReport" class="sidebar-link">
+                                <i class="mdi mdi-account-key"></i>
+                                <span class="hide-menu"> Supplier Reports </span>
+                            </a>
+                        </li>
+
+                        <!-- <li class="sidebar-item">
+                            <a asp-controller="Report" asp-action="EmployeeReport" class="sidebar-link">
+                                <i class="mdi mdi-account-key"></i>
+                                <span class="hide-menu"> Employees Reports </span>
+                            </a>
+                        </li> -->
+
                     </ul>
                 </li>
 

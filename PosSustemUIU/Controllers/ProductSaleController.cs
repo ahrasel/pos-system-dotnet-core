@@ -12,7 +12,7 @@ using PosSustemUIU.ViewModels;
 
 namespace PosSustemUIU.Controllers
 {
-    // [Authorize(Roles = "Administrator, Employee")]
+    [Authorize(Roles = "Administrator, Employee")]
     public class ProductSaleController : BaseCotroller
     {
         private readonly ApplicationDbContext _context;

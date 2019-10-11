@@ -83,7 +83,7 @@ namespace PosSustemUIU.Controllers
         // POST: ProductCategory/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Name,Description,Code,IsActive,Meta")] ProductCategory productCategory)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Description,Code,IsActive,Meta")] ProductCategory productCategory)
         {
             if (id != productCategory.Id)
             {

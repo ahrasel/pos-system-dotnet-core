@@ -1,6 +1,4 @@
-﻿@model IEnumerable<ApplicationUser>
-
-@{
+﻿@{
     ViewData["Title"] = "Employees";
     int count = 0;
 
@@ -51,10 +49,18 @@
                                         <img src="~/uploads/no_image.png" alt="" srcset="" style="max-width: 50px">
                                     }
                                 </td>
-                                <td class="text-center">@employee.IsActive</td>
+                                <td class="text-center">
+                                    @if (employee.IsActive == true)
+                                {
+                                    <a asp-controller="Employee" asp-action="ChangeActiveStatus" asp-route-id="@employee.Id"><span class="badge badge-primary">Yes</span> </a>
+                                }
+                                else{
+                                    <a asp-controller="Employee" asp-action="ChangeActiveStatus" asp-route-id="@employee.Id"><span class="badge badge-danger">No</span></a>
+                                }
+                                </td>
                                 <td class="text-center">
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary btn-sm text-white" data-toggle="modal" data-target="#modelId">
+                                    <button type="button" class="btn btn-primary btn-sm text-white" data-toggle="modal" data-target="#@employee.Id">
                                     <i class="mdi mdi-account-key" aria-hidden="true"></i>
                                     </button>
                                     <partial name="Table/Actionbuttons" model='new TableActionsVM{
@@ -64,6 +70,39 @@
 
                                     }'/>
                                     
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="@employee.Id" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                        <form asp-controller="Employee" asp-action="AddRole" method="POST" enctype="multipart/form-data">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Add Role To Employee</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <input type="hidden" name="employeeId" value="@employee.Id">
+                                                            <label class="control-label" style="margin-bottom: 0px;"></label>
+                                                            <select name="roleName" class="select2 form-control custom-select" style="width: 100%;">
+                                                                <option selected disabled>Select Role</option>
+                                                                @foreach (var role in ViewBag.Roles)
+                                                                {
+                                                                    <option value="@role.Name">@role.Name</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Add Role</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
                                 </td>
                                 
                             </tr>   
@@ -87,35 +126,7 @@
 
 
 
-<!-- Modal -->
-<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Add Role To Employee</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="control-label" style="margin-bottom: 0px;"></label>
-                    <select class="select2 form-control custom-select" style="width: 100%;">
-                                <option selected disabled>Select Area</option>
-                                @foreach (var role in ViewBag.Roles)
-                                {
-                                    <option value="@role.Id">@role.Name</option>
-                                }
-                            </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Add Role</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 @section Scripts {
     <script>

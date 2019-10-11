@@ -206,5 +206,17 @@ namespace PosSustemUIU.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddRole(string employeeId, string roleName)
+        {
+            var user = await _userManager.FindByIdAsync(employeeId);
+            var roles = await _userManager.GetRolesAsync(user);
+            await _userManager.RemoveFromRolesAsync(user, roles.ToArray());
+            await _userManager.AddToRoleAsync(user, roleName);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

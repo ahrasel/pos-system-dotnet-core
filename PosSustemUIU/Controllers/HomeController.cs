@@ -11,7 +11,7 @@ using PosSustemUIU.ViewModels;
 
 namespace PosSustemUIU.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator, Employee")]
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext _context;

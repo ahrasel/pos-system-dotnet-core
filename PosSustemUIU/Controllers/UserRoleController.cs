@@ -7,7 +7,7 @@ using PosSustemUIU.ViewModels;
 
 namespace PosSustemUIU.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class UserRoleController : BaseCotroller
     {
         private readonly UserManager<ApplicationUser> _userManager; 

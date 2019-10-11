@@ -13,7 +13,7 @@ using PosSustemUIU.ViewModels;
 
 namespace PosSustemUIU.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class EmployeeController : BaseCotroller
     {
         private readonly UserManager<ApplicationUser> _userManager;

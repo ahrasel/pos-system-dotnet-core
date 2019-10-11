@@ -10,7 +10,7 @@ using PosSustemUIU.Models;
 
 namespace PosSustemUIU.Controllers
 {
-    // [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator")]
     public class AreaController : BaseCotroller
     {
         private readonly ApplicationDbContext _context;

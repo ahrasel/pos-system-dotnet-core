@@ -11,7 +11,8 @@ using PosSustemUIU.Models.BLL;
 
 namespace PosSustemUIU.Controllers
 {
-    // [Authorize(Roles = "Administrator")]
+    
+    [Authorize(Roles = "Administrator")]
     public class ReportController : Controller
     {
         private readonly ApplicationDbContext _context;

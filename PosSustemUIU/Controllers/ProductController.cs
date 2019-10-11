@@ -29,7 +29,7 @@ namespace PosSustemUIU.Controllers
         // GET: Product
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Products.ToListAsync());
+            return View(await _context.Products.Include(p => p.ProductCategory).Include(p => p.Supplier).Include(p => p.Brand).ToListAsync());
         }
 
         // GET: Product/Details/5

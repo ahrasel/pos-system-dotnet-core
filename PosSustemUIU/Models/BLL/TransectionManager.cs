@@ -36,7 +36,7 @@ namespace PosSustemUIU.Models.BLL
 
         public async System.Threading.Tasks.Task<List<Transection>> GetTodaysTransectionAsync(){
             var date = DateTime.Today;
-            var transections = _context.Transections.Where(t => t.CreatedAt == date).Include(t => t.Product).Include(t => t.TransectionType);
+            var transections = _context.Transections.Include(t => t.Product).Include(t => t.TransectionType);
             
             return await transections.ToListAsync();
         }

@@ -7,8 +7,20 @@
 
 
 <div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-sm-6">
+            <h5 class="card-title">All Products</h5>
+        </div>
+        <div class="col-sm-6">
+            <button type="button" class="btn btn-primary btn-sm float-right">
+                <a asp-action="Create" class="text-white">Add New</a>
+            </button>   
+            
+        </div>
+        </div>
+    </div>
     <div class="card-body">
-        <h5 class="card-title">Inventroy Product Sales Report</h5>
         <div class="table-responsive">
             <table id="zero_config" class="table table-striped table-bordered">
                 <thead>
